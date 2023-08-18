@@ -36,20 +36,14 @@ const Readings = () => {
   const getIconForEachWatchingType = (types: TypeOfWatching) => {
     switch(types?.name) {
       case "Film":
-        return Movie;
-        break;
-      case "Série":
-        return Serie;
-        break;
-      case "Anime":
-        return Anime;
-        break;
-      case "Emission TV":
-        return Show;
-        break;
       default :
         return Movie;
-        break;
+      case "Série":
+        return Serie;
+      case "Anime":
+        return Anime;
+      case "Emission TV":
+        return Show;
     }
   }
 
@@ -59,7 +53,7 @@ const Readings = () => {
   // }, []);
 
   const sortWatchingByType = () => {
-    axios.get(`${import.meta.env.VITE_APP_URL}/watching?filter[type]=Film`)
+    axios.get(`${import.meta.env.VITE_APP_URL}/watching?filter[type]=Série`)
       .then((res) => console.log(res.data))
   }
 
@@ -82,7 +76,6 @@ const Readings = () => {
             </Grid>
           </Grid>
         ))}
-        
       </Grid>
       <Grid item xs={10} className="GeneralGrid">
         Liste des trucs à voir
