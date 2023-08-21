@@ -13,6 +13,9 @@
   .Card {
     max-width: 220px;
     border-radius: 10px;
+    .MuiCardContent-root {
+      text-align: center;
+    }
     &:hover {
       background-color: rgba($mainColor, 0.2);
     }

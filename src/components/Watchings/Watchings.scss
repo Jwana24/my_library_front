@@ -1,31 +1,39 @@
 @import '../../App.scss';
 
-.BreadcrumbContainer {
-  margin-bottom: 35px !important;
-}
-.MenuGrid {
-  border-right: 1px solid #ecf0f1;
-  div {
-    display: flex;
-    align-items: center;
-    margin-right: 10px !important;
-    padding: 5px 10px;
-    text-align: left;
-    border-radius: 5px;
-    &:hover {
-      cursor: pointer;
-      background-color: rgba($mainColor, 0.2);
+.Watchings {
+  .BreadcrumbContainer {
+    margin-bottom: 35px !important;
+  }
+  .MenuGrid {
+    div {
+      display: flex;
+      align-items: center;
+      margin-right: 10px !important;
+      padding: 5px 10px;
+      text-align: left;
+      border-radius: 5px;
+      &:hover {
+        cursor: pointer;
+        background-color: rgba($mainColor, 0.2);
+      }
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+      & img {
+        margin-right: 8px;
+      }
+      & a {
+        color: inherit;
+        text-decoration: none;
+      }
     }
-    &:not(:last-child) {
-      margin-bottom: 20px;
-    }
-    & img {
-      width: 22px;
-      margin-right: 8px;
-    }
-    & a {
-      color: inherit;
-      text-decoration: none;
-    }
+  }
+  
+  img {
+    width: 22px;
+  }
+
+  .WatchingsContainer {
+    border-left: 1px solid #ecf0f1;
   }
 }
