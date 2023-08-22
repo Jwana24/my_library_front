@@ -9,6 +9,10 @@ import {
   Grid,
   InputAdornment,
   Link,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
   OutlinedInput,
   Select,
@@ -53,6 +57,7 @@ const Status  = [
 
 const Readings = () => {
   const [types, setTypes] = useState<TypeOfWatching[]>([]);
+  const [selectedType, setSelectedType] = useState('');
   const [genres, setGenres] = useState<GenreOfWatching[]>([]);
   const [selectedGenre, setSelectedGenre] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
@@ -69,7 +74,7 @@ const Readings = () => {
 
   useEffect(() => {
     getWatchings();
-  }, [selectedGenre, selectedStatus, searchTitle]);
+  }, [selectedGenre, selectedStatus, searchTitle, selectedType]);
 
   const getIconForEachWatchingType = (types: TypeOfWatching) => {
     switch(types?.name) {
@@ -87,6 +92,11 @@ const Readings = () => {
 
   const generateQueryParameter = useMemo(() => {
     let queryParam = '?';
+    if (selectedType) {
+      console.log(selectedType);
+      
+      queryParam += `&filter[type]=${selectedType}`;
+    }
     if (selectedGenre) {
       queryParam += `&filter[genre]=${selectedGenre}`;
     }
@@ -97,7 +107,7 @@ const Readings = () => {
       queryParam += `&filter[title]=${searchTitle}`;
     }
     return queryParam;
-  }, [selectedGenre, selectedStatus, searchTitle]);
+  }, [selectedGenre, selectedStatus, searchTitle, selectedType]);
 
   const getWatchings = () => {
     axios.get(`${import.meta.env.VITE_APP_URL}/watching${generateQueryParameter}`)
@@ -106,6 +116,10 @@ const Readings = () => {
 
   const handleChangeGenre = (event: SelectChangeEvent) => {
     setSelectedGenre(event.target.value);
+  };
+
+  const handleOnClickTab = (type: string) => (event: React.MouseEvent<HTMLElement>) => {
+    setSelectedType(type);
   };
 
   const handleChangeStatus = (event: SelectChangeEvent) => {
@@ -125,14 +139,28 @@ const Readings = () => {
         </Breadcrumbs>
       </Grid>
       <Grid item xs={2}>
-        {types.map((type) => (
-          <Grid container className="MenuGrid" key={type?.id}>
-            <Grid item xs={12}>
-              <img src={getIconForEachWatchingType(type)} alt={`Icône ${type?.name}`} />
-              <Link>{type?.name}</Link>
-            </Grid>
-          </Grid>
-        ))}
+        <List className="ListOfTypes">
+          <ListItemButton
+            onClick={handleOnClickTab("")}
+            selected={"" === selectedType}
+            className="MenuGrid"
+          >
+            <ListItemText primary="Tous les visionnages" />
+          </ListItemButton>
+          {types.map((type) => (
+            <ListItemButton
+              key={type.id}
+              onClick={handleOnClickTab(type.name)}
+              selected={type.name === selectedType}
+              className="MenuGrid"
+            >
+              <ListItemIcon>
+                <img src={getIconForEachWatchingType(type)} alt={`Icône ${type?.name}`} />
+              </ListItemIcon>
+              <ListItemText primary={type?.name} />
+            </ListItemButton>
+          ))}
+        </List>
       </Grid>
       <Grid item xs={10} className="WatchingsContainer">
           <Grid container>

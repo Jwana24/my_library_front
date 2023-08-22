@@ -4,28 +4,33 @@
   .BreadcrumbContainer {
     margin-bottom: 35px !important;
   }
+  .ListOfTypes {
+    :first-child {
+      span {
+        font-weight: 500;
+      }
+    }
+  }
   .MenuGrid {
-    div {
-      display: flex;
-      align-items: center;
-      margin-right: 10px !important;
-      padding: 5px 10px;
-      text-align: left;
-      border-radius: 5px;
-      &:hover {
-        cursor: pointer;
-        background-color: rgba($mainColor, 0.2);
-      }
-      &:not(:last-child) {
-        margin-bottom: 20px;
-      }
-      & img {
-        margin-right: 8px;
-      }
-      & a {
-        color: inherit;
-        text-decoration: none;
-      }
+    display: flex;
+    align-items: center;
+    margin-right: 10px !important;
+    padding: 5px 10px;
+    text-align: left;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($mainColor, 0.2);
+    }
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .MuiListItemIcon-root {
+      min-width: 40px;
+    }
+    & a {
+      color: inherit;
+      text-decoration: none;
     }
   }
   
