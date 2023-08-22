@@ -220,7 +220,7 @@ const Readings = () => {
             <Grid item xs={12} sx={{ display: "flex" }}>
               {watchings.map((watching) => (
                 <Card key={watching.id} sx={{ ml: 2, mt: 2, width: '250px' }}>
-                  <CardActionArea href={`watchings/${watching.id}`}>
+                  <CardActionArea href={`watchings/${watching.id}`} sx={{ height: '100%' }}>
                     <CardContent>
                       <img src={watching.image} alt={`Affiche ${watching.title}`} />
                       <Typography variant="h6">{watching.title}</Typography>
