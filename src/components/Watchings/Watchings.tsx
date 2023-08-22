@@ -93,8 +93,6 @@ const Readings = () => {
   const generateQueryParameter = useMemo(() => {
     let queryParam = '?';
     if (selectedType) {
-      console.log(selectedType);
-      
       queryParam += `&filter[type]=${selectedType}`;
     }
     if (selectedGenre) {
