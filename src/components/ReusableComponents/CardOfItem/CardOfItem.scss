@@ -1,0 +1,7 @@
+.Card {
+  width: 250px;
+  margin-top: 15px;
+  &:not(:first-child) {
+    margin-left: 15px;
+  }
+}

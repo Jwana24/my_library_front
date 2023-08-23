@@ -1,53 +1,23 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Breadcrumbs,
-  Card,
-  CardActionArea,
-  CardContent,
-  FormControl,
-  Grid,
-  InputAdornment,
-  Link,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectChangeEvent,
-  Typography
-} from "@mui/material";
+import { Grid } from "@mui/material";
+import { getLocationPathname } from "../../utils/hooks";
+import { generateQueryParameter } from "../../utils";
+import { Type, Genre, TWatchings } from "../../types";
+
+import Breadcrumb from "../ReusableComponents/Breadcrumb/Breadcrumb";
+import SidebarMenu from "../ReusableComponents/SibebarMenu/SidebarMenu";
+import FilterGenre from "../ReusableComponents/FilterGenre/FilterGenre";
+import FilterStatus from "../ReusableComponents/FilterStatus/FilterStatus";
+import SearchBarTitle from "../ReusableComponents/SearchBarTitle/SearchBarTitle";
+import CardOfItem from "../ReusableComponents/CardOfItem/CardOfItem";
+
 import Movie from "../../assets/film.png";
 import Serie from "../../assets/serie.png";
 import Anime from "../../assets/animes.png";
 import Show from "../../assets/tv.png";
-import MGlass from "../../assets/mglass.png";
+
 import "./Watchings.scss";
-
-type TypeOfWatching = {
-  id: number;
-  name: string;
-};
-
-type GenreOfWatching = {
-  id: number;
-  name: string;
-  type: TypeOfWatching;
-}
-
-type Watchings = {
-  id: number;
-  status: string;
-  producer: string;
-  title: string;
-  image: string;
-  saga: boolean;
-  summary: string;
-  type: TypeOfWatching;
-  genres: GenreOfWatching;
-}
 
 const Status  = [
   {name: "En cours de visionnage"},
@@ -55,14 +25,19 @@ const Status  = [
   {name: "Vu"}
 ]
 
-const Readings = () => {
-  const [types, setTypes] = useState<TypeOfWatching[]>([]);
+const Watchings = () => {
+  const [types, setTypes] = useState<Type[]>([]);
   const [selectedType, setSelectedType] = useState('');
-  const [genres, setGenres] = useState<GenreOfWatching[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedGenre, setSelectedGenre] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [searchTitle, setSearchTitle] = useState('');
-  const [watchings, setWatchings] = useState<Watchings[]>([]);
+  const [watchings, setWatchings] = useState<TWatchings[]>([]);
+
+  const getWatchings = (selectedGenre: string, selectedStatus: string, searchTitle: string, selectedType: string) => {
+    axios.get(`${import.meta.env.VITE_APP_URL}/watching${generateQueryParameter(selectedGenre, selectedStatus, searchTitle, selectedType)}`)
+      .then((res) => setWatchings(res.data))
+  }
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_APP_URL}/watching-type`)
@@ -73,11 +48,11 @@ const Readings = () => {
   }, []);
 
   useEffect(() => {
-    getWatchings();
+    getWatchings(selectedGenre, selectedStatus, searchTitle, selectedType);
   }, [selectedGenre, selectedStatus, searchTitle, selectedType]);
 
-  const getIconForEachWatchingType = (types: TypeOfWatching) => {
-    switch(types?.name) {
+  const getIconForEachWatchingType = (type: Type) => {
+    switch(type?.name) {
       case "Film":
       default :
         return Movie;
@@ -90,141 +65,44 @@ const Readings = () => {
     }
   }
 
-  const generateQueryParameter = useMemo(() => {
-    let queryParam = '?';
-    if (selectedType) {
-      queryParam += `&filter[type]=${selectedType}`;
-    }
-    if (selectedGenre) {
-      queryParam += `&filter[genre]=${selectedGenre}`;
-    }
-    if (selectedStatus) {
-      queryParam += `&filter[status]=${selectedStatus}`;
-    }
-    if (searchTitle) {
-      queryParam += `&filter[title]=${searchTitle}`;
-    }
-    return queryParam;
-  }, [selectedGenre, selectedStatus, searchTitle, selectedType]);
-
-  const getWatchings = () => {
-    axios.get(`${import.meta.env.VITE_APP_URL}/watching${generateQueryParameter}`)
-      .then((res) => setWatchings(res.data))
-  }
-
-  const handleChangeGenre = (event: SelectChangeEvent) => {
-    setSelectedGenre(event.target.value);
-  };
-
-  const handleOnClickTab = (type: string) => (event: React.MouseEvent<HTMLElement>) => {
-    setSelectedType(type);
-  };
-
-  const handleChangeStatus = (event: SelectChangeEvent) => {
-    setSelectedStatus(event.target.value);
-  };
-
-  const handleChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTitle(event.target.value);
-  };
-
   return (
     <Grid container className="Watchings">
-      <Grid item xs={12} className="BreadcrumbContainer">
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link color="text.secondary" href="/">Accueil</Link>
-          <Typography color="text.primary">Visionnages</Typography>
-        </Breadcrumbs>
-      </Grid>
+      <Breadcrumb currentPath={getLocationPathname()} />
       <Grid item xs={2}>
-        <List className="ListOfTypes">
-          <ListItemButton
-            onClick={handleOnClickTab("")}
-            selected={"" === selectedType}
-            className="MenuGrid"
-          >
-            <ListItemText primary="Tous les visionnages" />
-          </ListItemButton>
-          {types.map((type) => (
-            <ListItemButton
-              key={type.id}
-              onClick={handleOnClickTab(type.name)}
-              selected={type.name === selectedType}
-              className="MenuGrid"
-            >
-              <ListItemIcon>
-                <img src={getIconForEachWatchingType(type)} alt={`Icône ${type?.name}`} />
-              </ListItemIcon>
-              <ListItemText primary={type?.name} />
-            </ListItemButton>
-          ))}
-        </List>
+        <SidebarMenu
+          getIconForEachType={getIconForEachWatchingType}
+          selectedType={selectedType}
+          setSelectedType={setSelectedType}
+          types={types}
+        />
       </Grid>
       <Grid item xs={10} className="WatchingsContainer">
           <Grid container>
             <Grid item xs={12}>
               <div>
-                <FormControl sx={{ mr: 1, ml: 2, minWidth: 120 }} size="small">
-                  <Select
-                    value={selectedGenre}
-                    onChange={handleChangeGenre}
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                    <MenuItem value="">
-                      <em>Tous les genres</em>
-                    </MenuItem>
-                    {genres.map((genre) => (
-                      <MenuItem key={genre.id} value={genre.name}>{genre.name}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ mr: 1, minWidth: 120 }} size="small">
-                  <Select
-                    value={selectedStatus}
-                    onChange={handleChangeStatus}
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                    <MenuItem value="">
-                      <em>Tous les status</em>
-                    </MenuItem>
-                    {Status.map((status, index) => (
-                      <MenuItem key={index} value={status.name}>{status.name}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ mr: 1, width: '25ch' }} variant="outlined" size="small">
-                  <OutlinedInput
-                    id="outlined-adornment-weight"
-                    placeholder="Titre à rechercher"
-                    defaultValue={searchTitle}
-                    onChange={handleChangeTitle}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <img src={MGlass} alt="Icône d'une loupe" />
-                      </InputAdornment>
-                    }
-                    aria-describedby="outlined-weight-helper-text"
-                    inputProps={{
-                      'aria-label': 'weight',
-                    }}
+                {selectedType !== "" && (
+                  <FilterGenre
+                    setSelectedGenre={setSelectedGenre}
+                    selectedGenre={selectedGenre}
+                    genres={genres}
                   />
-                </FormControl>
+                )}
+                <FilterStatus
+                  setSelectedStatus={setSelectedStatus}
+                  selectedStatus={selectedStatus}
+                  status={Status}
+                />
+                <SearchBarTitle
+                  setSearchTitle={setSearchTitle}
+                  searchTitle={searchTitle}
+                />
               </div>
             </Grid>
           </Grid>
           <Grid container>
             <Grid item xs={12} sx={{ display: "flex" }}>
               {watchings.map((watching) => (
-                <Card key={watching.id} sx={{ ml: 2, mt: 2, width: '250px' }}>
-                  <CardActionArea href={`watchings/${watching.id}`} sx={{ height: '100%' }}>
-                    <CardContent>
-                      <img src={watching.image} alt={`Affiche ${watching.title}`} />
-                      <Typography variant="h6">{watching.title}</Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
+                <CardOfItem key={watching.id} item={watching} />
               ))}
             </Grid>
           </Grid>
@@ -233,4 +111,4 @@ const Readings = () => {
   )
 }
 
-export default Readings;
+export default Watchings;

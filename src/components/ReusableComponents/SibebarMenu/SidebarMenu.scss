@@ -1,0 +1,36 @@
+@import '../../../App.scss';
+
+.ListOfTypes {
+  :first-child {
+    span {
+      font-weight: 500;
+    }
+  }
+
+  img {
+    width: 22px;
+  }
+
+  .MenuGrid {
+    display: flex;
+    align-items: center;
+    margin-right: 10px !important;
+    padding: 5px 10px;
+    text-align: left;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($mainColor, 0.2);
+    }
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .MuiListItemIcon-root {
+      min-width: 40px;
+    }
+    & a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}

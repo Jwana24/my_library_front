@@ -26,10 +26,10 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route path="/" element={< Homepage />}></Route>
-          <Route path="/readings" element={< Readings />}></Route>
-          <Route path="/watchings" element={< Watchings />}></Route>
-          <Route path="/listenings" element={< Listenings />}></Route>
+          <Route path="/" element={< Homepage />} />
+          <Route path="/lecture" element={< Readings />} />
+          <Route path="/visionnage" element={< Watchings />} />
+          <Route path="/ecoute" element={< Listenings />} />
         </Routes>
       </ThemeProvider>
     </>
