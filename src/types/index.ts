@@ -23,6 +23,16 @@ export type TReadings = {
   genres: Genre;
 }
 
+export type TListenings = {
+  id: number;
+  status: string;
+  artist: string;
+  title: string;
+  image: string;
+  type: Type;
+  genres: Genre;
+}
+
 export type Type = {
   id: number;
   name: string;

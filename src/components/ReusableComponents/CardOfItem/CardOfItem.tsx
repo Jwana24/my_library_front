@@ -1,10 +1,10 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
-import { TWatchings, TReadings } from "../../../types";
+import { TWatchings, TReadings, TListenings } from "../../../types";
 import { getLocationPathname } from "../../../utils/hooks";
 import "./CardOfItem.scss";
 
 interface ICardOfItem {
-  item: TWatchings | TReadings
+  item: TWatchings | TReadings | TListenings
 }
 
 const CardOfItem = ({ item }: ICardOfItem) => {
