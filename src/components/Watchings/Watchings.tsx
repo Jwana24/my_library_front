@@ -1,23 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid } from "@mui/material";
-import { getLocationPathname } from "../../utils/hooks";
 import { generateQueryParameter } from "../../utils";
 import { Type, Genre, TWatchings } from "../../types";
-
-import Breadcrumb from "../ReusableComponents/Breadcrumb/Breadcrumb";
-import SidebarMenu from "../ReusableComponents/SibebarMenu/SidebarMenu";
-import FilterGenre from "../ReusableComponents/FilterGenre/FilterGenre";
-import FilterStatus from "../ReusableComponents/FilterStatus/FilterStatus";
-import SearchBarTitle from "../ReusableComponents/SearchBarTitle/SearchBarTitle";
-import CardOfItem from "../ReusableComponents/CardOfItem/CardOfItem";
+import LibraryList from "../ReusableComponents/LibraryList/LibraryList";
 
 import Movie from "../../assets/film.png";
 import Serie from "../../assets/serie.png";
 import Anime from "../../assets/animes.png";
 import Show from "../../assets/tv.png";
-
-import "./Watchings.scss";
 
 const Status  = [
   {name: "En cours de visionnage"},
@@ -66,48 +56,21 @@ const Watchings = () => {
   }
 
   return (
-    <Grid container className="Watchings">
-      <Breadcrumb currentPath={getLocationPathname()} />
-      <Grid item xs={2}>
-        <SidebarMenu
-          getIconForEachType={getIconForEachWatchingType}
-          selectedType={selectedType}
-          setSelectedType={setSelectedType}
-          types={types}
-        />
-      </Grid>
-      <Grid item xs={10} className="WatchingsContainer">
-          <Grid container>
-            <Grid item xs={12}>
-              <div>
-                {selectedType !== "" && (
-                  <FilterGenre
-                    setSelectedGenre={setSelectedGenre}
-                    selectedGenre={selectedGenre}
-                    genres={genres}
-                  />
-                )}
-                <FilterStatus
-                  setSelectedStatus={setSelectedStatus}
-                  selectedStatus={selectedStatus}
-                  status={Status}
-                />
-                <SearchBarTitle
-                  setSearchTitle={setSearchTitle}
-                  searchTitle={searchTitle}
-                />
-              </div>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs={12} sx={{ display: "flex" }}>
-              {watchings.map((watching) => (
-                <CardOfItem key={watching.id} item={watching} />
-              ))}
-            </Grid>
-          </Grid>
-      </Grid>
-    </Grid>
+    <LibraryList
+      getIconForEachType={getIconForEachWatchingType}
+      selectedType={selectedType}
+      setSelectedType={setSelectedType}
+      types={types}
+      setSelectedGenre={setSelectedGenre}
+      selectedGenre={selectedGenre}
+      genres={genres}
+      setSelectedStatus={setSelectedStatus}
+      selectedStatus={selectedStatus}
+      status={Status}
+      setSearchTitle={setSearchTitle}
+      searchTitle={searchTitle}
+      libraryElements={watchings}
+    />
   )
 }
 

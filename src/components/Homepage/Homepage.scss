@@ -6,9 +6,18 @@
   align-items: center;
 
   .Card {
+    width: 250px;
+    height: 200px;
     border-radius: 10px;
-    .MuiCardContent-root {
-      text-align: center;
+    .MuiButtonBase-root {
+      height: 100%;
+      .MuiCardActionArea-focusHighlight {
+        background: transparent;
+      }
+      .MuiCardContent-root {
+        @include flex(column, center, center);
+        text-align: center;
+      }
     }
     &:hover {
       background-color: rgba($mainColor, 0.2);

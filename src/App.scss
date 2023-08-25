@@ -1,5 +1,13 @@
 $mainColor: #74b9ff;
 
+// --- MIXINS --- //
+@mixin flex($direction, $align, $justify) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;

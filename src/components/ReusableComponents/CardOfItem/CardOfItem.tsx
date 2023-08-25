@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent } from "@mui/material";
 import { TWatchings, TReadings, TListenings } from "../../../types";
 import { getLocationPathname } from "../../../utils/hooks";
 import "./CardOfItem.scss";
@@ -12,8 +12,9 @@ const CardOfItem = ({ item }: ICardOfItem) => {
     <Card className="Card">
       <CardActionArea href={`${getLocationPathname()}/${item.id}`} sx={{ height: '100%' }}>
         <CardContent>
-          <img src={item.image} alt={`Affiche ${item.title}`} />
-          <Typography variant="h6">{item.title}</Typography>
+          <div className="ImageContainer">
+            <img src={item.image} alt={`Affiche ${item.title}`} />
+          </div>
         </CardContent>
       </CardActionArea>
     </Card>
