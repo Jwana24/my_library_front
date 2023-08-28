@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Grid, Modal, Typography } from "@mui/material";
+import { Box, Button, Grid, Modal, Typography } from "@mui/material";
 import { TListenings, TReadings, TWatchings } from "../../../types";
 import Trash from "../../../assets/poubelle.png";
 import Pencil from "../../../assets/crayon.png";
