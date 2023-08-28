@@ -7,7 +7,7 @@ export type TWatchings = {
   saga: boolean;
   summary: string;
   type: Type;
-  genres: Genre;
+  genres: Genre[];
 }
 
 export type TReadings = {
@@ -20,7 +20,7 @@ export type TReadings = {
   summary: string;
   lang: string;
   type: Type;
-  genres: Genre;
+  genres: Genre[];
 }
 
 export type TListenings = {
@@ -30,7 +30,7 @@ export type TListenings = {
   title: string;
   image: string;
   type: Type;
-  genres: Genre;
+  genres: Genre[];
 }
 
 export type Type = {
