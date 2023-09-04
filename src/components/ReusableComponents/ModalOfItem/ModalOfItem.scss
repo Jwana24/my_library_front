@@ -37,12 +37,12 @@
     }
   }
 
-  .ModalFooter {
+  .ModalButtonsContainer {
     @include flex(null, null, space-between);
     padding: 15px;
-    border-top: 1px solid #ecf0f1;
 
     button{
+      margin-top: 20px;
       align-items: end;
       height: 33px;
       &:first-child {
@@ -52,5 +52,9 @@
         width: 25px;
       }
     }
+  }
+
+  .ModalFooter {
+    border-top: 1px solid #ecf0f1;
   }
 }

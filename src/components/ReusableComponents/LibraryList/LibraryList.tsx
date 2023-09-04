@@ -23,6 +23,7 @@ interface ILibraryList {
   setSearchTitle: React.Dispatch<React.SetStateAction<string>>
   searchTitle: string
   libraryElements:  TWatchings[] | TReadings[] | TListenings[]
+  deleteItem: (id: number) => Promise<void>
 }
 
 const LibraryList = ({
@@ -38,7 +39,8 @@ const LibraryList = ({
   status,
   setSearchTitle,
   searchTitle,
-  libraryElements
+  libraryElements,
+  deleteItem
 }: ILibraryList) => {
   return (
     <Grid container>
@@ -77,7 +79,7 @@ const LibraryList = ({
         <Grid item xs={12} sx={{ display: "flex", marginTop: "15px" }}>
           {libraryElements.map((libraryElement) => (
             <div key={libraryElement.id} style={{ ...(libraryElement.id !== libraryElements[libraryElements.length - 1].id && { marginRight: "15px" }) }}>
-              <CardOfItem item={libraryElement} />
+              <CardOfItem item={libraryElement} deleteItem={deleteItem} />
               <Typography variant="body2" sx={{ width: "200px" }}>{libraryElement.title}</Typography>
             </div>
           ))}

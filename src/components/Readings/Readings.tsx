@@ -56,6 +56,14 @@ const Readings = () => {
     }
   }
 
+  const deleteItem = async(id: number) => {
+    return axios.delete(`${import.meta.env.VITE_APP_URL}/reading/${id}`)
+      .then(() => setReadings(readings.filter((reading) => reading.id !== id)))
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachReadingType}
@@ -71,6 +79,7 @@ const Readings = () => {
       setSearchTitle={setSearchTitle}
       searchTitle={searchTitle}
       libraryElements={readings}
+      deleteItem={deleteItem}
     />
   )
 }

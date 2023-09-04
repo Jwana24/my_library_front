@@ -48,6 +48,14 @@ const Listenings = () => {
     }
   }
 
+  const deleteItem = async(id: number) => {
+    return axios.delete(`${import.meta.env.VITE_APP_URL}/listening/${id}`)
+      .then(() => setListenings(listenings.filter((listening) => listening.id !== id)))
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachListeningType}
@@ -63,6 +71,7 @@ const Listenings = () => {
       setSearchTitle={setSearchTitle}
       searchTitle={searchTitle}
       libraryElements={listenings}
+      deleteItem={deleteItem}
     />
   )
 }

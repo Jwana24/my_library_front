@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Card, CardActionArea, CardContent } from "@mui/material";
 import { TWatchings, TReadings, TListenings } from "../../../types";
+import ModalOfItem from "../ModalOfItem/ModalOfItem.tsx";
 
 import "./CardOfItem.scss";
-import ModalOfItem from "../ModalOfItem/ModalOfItem.tsx";
 
 interface ICardOfItem {
   item: TWatchings | TReadings | TListenings
+  deleteItem: (id: number) => Promise<void>
 }
 
-const CardOfItem = ({ item }: ICardOfItem) => {
+const CardOfItem = ({ item, deleteItem }: ICardOfItem) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -27,7 +28,7 @@ const CardOfItem = ({ item }: ICardOfItem) => {
           </CardContent>
         </CardActionArea>
       </Card>
-      <ModalOfItem item={item} open={open} handleClose={handleClose} />
+      <ModalOfItem item={item} open={open} handleClose={handleClose} deleteItem={deleteItem} />
     </>
   )
 }

@@ -55,6 +55,14 @@ const Watchings = () => {
     }
   }
 
+  const deleteItem = async(id: number) => {
+    return axios.delete(`${import.meta.env.VITE_APP_URL}/watching/${id}`)
+      .then(() => setWatchings(watchings.filter((watching) => watching.id !== id)))
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachWatchingType}
@@ -70,6 +78,7 @@ const Watchings = () => {
       setSearchTitle={setSearchTitle}
       searchTitle={searchTitle}
       libraryElements={watchings}
+      deleteItem={deleteItem}
     />
   )
 }
