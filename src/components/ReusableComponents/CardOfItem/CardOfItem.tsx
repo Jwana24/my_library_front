@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, CardActionArea, CardContent } from "@mui/material";
-import { TWatchings, TReadings, TListenings } from "../../../types";
+import { TWatchings, TReadings, TListenings, Genre } from "../../../types";
 import ModalOfItem from "../ModalOfItem/ModalOfItem.tsx";
 
 import "./CardOfItem.scss";
@@ -8,9 +8,11 @@ import "./CardOfItem.scss";
 interface ICardOfItem {
   item: TWatchings | TReadings | TListenings
   deleteItem: (id: number) => Promise<void>
+  updateItem: (id: number, formValues: object) => Promise<void>
+  genres: Genre[]
 }
 
-const CardOfItem = ({ item, deleteItem }: ICardOfItem) => {
+const CardOfItem = ({ item, deleteItem, updateItem, genres }: ICardOfItem) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -19,6 +21,7 @@ const CardOfItem = ({ item, deleteItem }: ICardOfItem) => {
 
   return (
     <>
+      {/* The card of the item */}
       <Card className="Card">
         <CardActionArea onClick={() => handleOpen()} sx={{ height: '100%' }}>
           <CardContent>
@@ -28,7 +31,15 @@ const CardOfItem = ({ item, deleteItem }: ICardOfItem) => {
           </CardContent>
         </CardActionArea>
       </Card>
-      <ModalOfItem item={item} open={open} handleClose={handleClose} deleteItem={deleteItem} />
+      {/* Modal which opens after clicking on the card of the item */}
+      <ModalOfItem
+        item={item}
+        open={open}
+        handleClose={handleClose}
+        deleteItem={deleteItem}
+        updateItem={updateItem}
+        genres={genres}
+      />
     </>
   )
 }

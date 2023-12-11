@@ -63,6 +63,14 @@ const Watchings = () => {
       });
   }
 
+  const updateItem = async(id: number) => {
+    return axios.put(`${import.meta.env.VITE_APP_URL}/watching/${id}`)
+      .then((res) => console.log(res))
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachWatchingType}
@@ -79,6 +87,7 @@ const Watchings = () => {
       searchTitle={searchTitle}
       libraryElements={watchings}
       deleteItem={deleteItem}
+      updateItem={updateItem}
     />
   )
 }

@@ -64,6 +64,27 @@ const Readings = () => {
       });
   }
 
+  const updateItem = async(id: number, formValues: Record<string, any>) => {
+    const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }))
+    const reading: TReadings = {
+      genres: genres,
+      image: formValues.image,
+      summary: formValues.summary
+    }
+
+    return axios.patch(`${import.meta.env.VITE_APP_URL}/reading/${id}`, reading)
+      .then((res) => {
+        const modifiedReadings = readings.map((reading) => {
+          return reading.id === id ? res.data : reading;
+        });
+
+        setReadings(modifiedReadings)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachReadingType}
@@ -80,6 +101,7 @@ const Readings = () => {
       searchTitle={searchTitle}
       libraryElements={readings}
       deleteItem={deleteItem}
+      updateItem={updateItem}
     />
   )
 }

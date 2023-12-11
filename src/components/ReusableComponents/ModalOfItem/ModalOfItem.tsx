@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Box, Button, Grid, Modal, Typography } from "@mui/material";
-import { TListenings, TReadings, TWatchings } from "../../../types";
+import { Genre, TListenings, TReadings, TWatchings } from "../../../types";
 import ConfirmModal from "./ConfirmModal.tsx";
+import UpdateModal from "./UpdateModal.tsx";
 import Trash from "../../../assets/poubelle.png";
 import Pencil from "../../../assets/crayon.png";
 
@@ -12,17 +13,26 @@ interface IModalOfItem {
   handleClose: () => void
   item: TWatchings | TReadings | TListenings
   deleteItem: (id: number) => Promise<void>
+  updateItem: (id: number, formValues: object) => Promise<void>
+  genres: Genre[]
 }
 
-const ModalOfItem = ({ open, handleClose, item, deleteItem }: IModalOfItem) => {
-  const [openNestedModal, setOpenNestedModal] = useState(false);
+const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres }: IModalOfItem) => {
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
-  const handleOpenNestedModal = () => setOpenNestedModal(true);
+  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+  const handleOpenUpdateModal = () => setOpenUpdateModal(true);
 
-  const handleCloseNestedModal = () => setOpenNestedModal(false);
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+  const handleCloseUpdateModal = () => setOpenUpdateModal(false);
 
   const handleClickDelete = () => {
-    handleOpenNestedModal();
+    handleOpenDeleteModal();
+  }
+
+  const handleClickUpdate = () => {
+    handleOpenUpdateModal();
   }
 
   return (
@@ -71,7 +81,7 @@ const ModalOfItem = ({ open, handleClose, item, deleteItem }: IModalOfItem) => {
                   Supprimer
                 </Button>
                 <Button
-                  onClick={handleClose}
+                  onClick={handleClickUpdate}
                   variant="contained"
                   color="success"
                   size="small"
@@ -87,11 +97,19 @@ const ModalOfItem = ({ open, handleClose, item, deleteItem }: IModalOfItem) => {
           </Grid>
         </Box>
         <ConfirmModal
-          openNestedModal={openNestedModal}
-          handleCloseNestedModal={handleCloseNestedModal}
+          openModal={openDeleteModal}
+          handleCloseModal={handleCloseDeleteModal}
           handleClose={handleClose}
           item={item}
           deleteItem={deleteItem}
+        />
+        <UpdateModal
+          openModal={openUpdateModal}
+          handleCloseModal={handleCloseUpdateModal}
+          handleClose={handleClose}
+          item={item}
+          updateItem={updateItem}
+          genres={genres}
         />
       </>
     </Modal>

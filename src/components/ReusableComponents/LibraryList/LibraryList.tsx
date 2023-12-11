@@ -24,6 +24,7 @@ interface ILibraryList {
   searchTitle: string
   libraryElements:  TWatchings[] | TReadings[] | TListenings[]
   deleteItem: (id: number) => Promise<void>
+  updateItem: (id: number, formValues: object) => Promise<void>
 }
 
 const LibraryList = ({
@@ -40,7 +41,8 @@ const LibraryList = ({
   setSearchTitle,
   searchTitle,
   libraryElements,
-  deleteItem
+  deleteItem,
+  updateItem
 }: ILibraryList) => {
   return (
     <Grid container>
@@ -79,7 +81,7 @@ const LibraryList = ({
         <Grid item xs={12} sx={{ display: "flex", marginTop: "15px" }}>
           {libraryElements.map((libraryElement) => (
             <div key={libraryElement.id} style={{ ...(libraryElement.id !== libraryElements[libraryElements.length - 1].id && { marginRight: "15px" }) }}>
-              <CardOfItem item={libraryElement} deleteItem={deleteItem} />
+              <CardOfItem item={libraryElement} deleteItem={deleteItem} updateItem={updateItem} genres={genres} />
               <Typography variant="body2" sx={{ width: "200px" }}>{libraryElement.title}</Typography>
             </div>
           ))}
