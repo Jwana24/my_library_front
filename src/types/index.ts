@@ -12,13 +12,13 @@ export type TWatchings = {
 
 export type TReadings = {
   id?: number;
-  status?: string;
-  author?: string;
-  title?: string;
+  status: string;
+  author: string;
+  title: string;
   image: string;
-  saga?: boolean;
+  saga: boolean;
   summary: string;
-  lang?: string;
+  lang: string;
   type?: Type;
   genres: Genre[];
 }

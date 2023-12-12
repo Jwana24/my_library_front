@@ -1,26 +1,60 @@
 import { useEffect, useState } from "react";
-import { Box, Button, Grid, MenuItem, Modal, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox, FormControlLabel,
+  Grid,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography
+} from "@mui/material";
 import { Genre, TListenings, TReadings, TWatchings } from "../../../types";
 
 interface IUpdateModal {
   openModal: boolean
   handleCloseModal: () => void
-  handleClose: () => void
   item: TWatchings | TReadings | TListenings
   updateItem: (id: number, formValues: object) => Promise<void>
   genres: Genre[]
+  status: Array<{ name: string }>
 }
 
-const UpdateModal = ({ openModal, handleCloseModal, handleClose, item, updateItem, genres }: IUpdateModal) => {
+const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, status }: IUpdateModal) => {
+  const [statusSelected, setStatusSelected] = useState(item.status);
+  const [author, setAuthor] = useState("author" in item ? item.author : undefined);
+  const [title, setTitle] = useState(item.title);
+  const [saga, setSaga] = useState("saga" in item ? item.saga : undefined);
+  const [lang, setLang] = useState("lang" in item ? item.lang : undefined);
   const [genreIds, setGenreIds] = useState<number[]>([]);
   const [image, setImage] = useState(item.image);
-  const [summary, setSummary] = useState("summary" in item ? item.summary: null);
+  const [summary, setSummary] = useState("summary" in item ? item.summary : undefined);
 
   useEffect(() => {
     setGenreIds(item.genres.map((genre) => genre.id));
   }, [item]);
 
-  // console.log(item)
+  const handleChangeStatus = (event: SelectChangeEvent) => {
+    setStatusSelected(event.target.value);
+  }
+
+  const handleChangeAuthor = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthor(event.target.value);
+  }
+
+  const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  }
+
+  const handleChangeSaga = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSaga(event.target.checked);
+  }
+
+  const handleChangeLang = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLang(event.target.value);
+  }
 
   const handleChangeGenre = (event: SelectChangeEvent<typeof genreIds>) => {
     setGenreIds(event.target.value as number[]);
@@ -36,12 +70,16 @@ const UpdateModal = ({ openModal, handleCloseModal, handleClose, item, updateIte
 
   const handleClickUpdate = () => {
     item.id && updateItem(item.id, {
+      status: statusSelected,
+      author: author,
+      title: title,
+      saga: saga,
+      lang: lang,
       genreIds: genreIds,
       image: image,
       summary: summary
     }).then(() => {
       handleCloseModal();
-      handleClose();
     });
   }
 
@@ -61,9 +99,77 @@ const UpdateModal = ({ openModal, handleCloseModal, handleClose, item, updateIte
           </Grid>
           <Grid item xs={12} className="ModalBody">
             <Grid container justifyContent="space-between">
+              {"saga" in item && (
+                <Grid item xs={5}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox checked={saga} onChange={handleChangeSaga} />
+                        }
+                        label="Est-ce une saga ?"
+                        labelPlacement="start"
+                        sx={{ m: 0 }}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )}
+              {"lang" in item && (
+                <Grid item xs={5}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <Typography>Langue</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        defaultValue={item.lang}
+                        onChange={handleChangeLang}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )}
+
+              {"author" in item && (
+                <Grid item xs={6}>
+                  <Grid container>
+                    <Grid item xs={12} mt={2}>
+                      <Typography>Auteur</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        defaultValue={item.author}
+                        onChange={handleChangeAuthor}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )}
+              <Grid item xs={5}>
+                <Grid container>
+                  <Grid item xs={12} mt={2}>
+                    <Typography>Status</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Select size="small" value={statusSelected} onChange={handleChangeStatus} fullWidth>
+                      {status.map((statusSelected, index) => (
+                        <MenuItem key={index} value={statusSelected.name}>{statusSelected.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </Grid>
+                </Grid>
+              </Grid>
+
               <Grid item xs={6}>
                 <Grid container>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} mt={2}>
                     <Typography>Lien de l'image</Typography>
                   </Grid>
                   <Grid item xs={12}>
@@ -79,7 +185,7 @@ const UpdateModal = ({ openModal, handleCloseModal, handleClose, item, updateIte
               </Grid>
               <Grid item xs={5}>
                 <Grid container>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} mt={2}>
                     <Typography>Genre(s)</Typography>
                   </Grid>
                   <Grid item xs={12}>
@@ -91,6 +197,24 @@ const UpdateModal = ({ openModal, handleCloseModal, handleClose, item, updateIte
                   </Grid>
                 </Grid>
               </Grid>
+
+              <Grid item xs={12}>
+                <Grid container>
+                  <Grid item xs={12} mt={2}>
+                    <Typography>Titre</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      defaultValue={item.title}
+                      onChange={handleChangeTitle}
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
               {"summary" in item && (
                 <Grid item xs={12} mt={2}>
                   <Grid container>

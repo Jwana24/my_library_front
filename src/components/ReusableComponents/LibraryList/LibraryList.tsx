@@ -81,7 +81,7 @@ const LibraryList = ({
         <Grid item xs={12} sx={{ display: "flex", marginTop: "15px" }}>
           {libraryElements.map((libraryElement) => (
             <div key={libraryElement.id} style={{ ...(libraryElement.id !== libraryElements[libraryElements.length - 1].id && { marginRight: "15px" }) }}>
-              <CardOfItem item={libraryElement} deleteItem={deleteItem} updateItem={updateItem} genres={genres} />
+              <CardOfItem item={libraryElement} deleteItem={deleteItem} updateItem={updateItem} genres={genres} status={status} />
               <Typography variant="body2" sx={{ width: "200px" }}>{libraryElement.title}</Typography>
             </div>
           ))}

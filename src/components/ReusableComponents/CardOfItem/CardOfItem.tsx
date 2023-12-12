@@ -10,9 +10,10 @@ interface ICardOfItem {
   deleteItem: (id: number) => Promise<void>
   updateItem: (id: number, formValues: object) => Promise<void>
   genres: Genre[]
+  status: Array<{ name: string }>
 }
 
-const CardOfItem = ({ item, deleteItem, updateItem, genres }: ICardOfItem) => {
+const CardOfItem = ({ item, deleteItem, updateItem, genres, status }: ICardOfItem) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -39,6 +40,7 @@ const CardOfItem = ({ item, deleteItem, updateItem, genres }: ICardOfItem) => {
         deleteItem={deleteItem}
         updateItem={updateItem}
         genres={genres}
+        status={status}
       />
     </>
   )

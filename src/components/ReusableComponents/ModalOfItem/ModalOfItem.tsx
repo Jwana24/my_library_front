@@ -15,9 +15,10 @@ interface IModalOfItem {
   deleteItem: (id: number) => Promise<void>
   updateItem: (id: number, formValues: object) => Promise<void>
   genres: Genre[]
+  status: Array<{ name: string }>
 }
 
-const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres }: IModalOfItem) => {
+const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres, status }: IModalOfItem) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
@@ -106,10 +107,10 @@ const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres }
         <UpdateModal
           openModal={openUpdateModal}
           handleCloseModal={handleCloseUpdateModal}
-          handleClose={handleClose}
           item={item}
           updateItem={updateItem}
           genres={genres}
+          status={status}
         />
       </>
     </Modal>

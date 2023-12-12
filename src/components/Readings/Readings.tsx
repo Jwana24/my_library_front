@@ -67,6 +67,11 @@ const Readings = () => {
   const updateItem = async(id: number, formValues: Record<string, any>) => {
     const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }))
     const reading: TReadings = {
+      status: formValues.status,
+      author: formValues.author,
+      title: formValues.title,
+      saga: formValues.saga,
+      lang: formValues.lang,
       genres: genres,
       image: formValues.image,
       summary: formValues.summary
