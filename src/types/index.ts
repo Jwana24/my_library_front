@@ -19,7 +19,7 @@ export type TReadings = {
   saga: boolean;
   summary: string;
   lang: string;
-  type?: Type;
+  type: Type;
   genres: Genre[];
 }
 
@@ -35,7 +35,7 @@ export type TListenings = {
 
 export type Type = {
   id: number;
-  name: string;
+  name?: string;
 };
 
 export type Genre = {

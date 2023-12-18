@@ -11,7 +11,7 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import { Genre, TListenings, TReadings, TWatchings } from "../../../types";
+import { Genre, TListenings, TReadings, TWatchings, Type } from "../../../types";
 
 interface IUpdateModal {
   openModal: boolean
@@ -19,11 +19,13 @@ interface IUpdateModal {
   item: TWatchings | TReadings | TListenings
   updateItem: (id: number, formValues: object) => Promise<void>
   genres: Genre[]
+  types: Type[]
   status: Array<{ name: string }>
 }
 
-const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, status }: IUpdateModal) => {
+const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, types, status }: IUpdateModal) => {
   const [statusSelected, setStatusSelected] = useState(item.status);
+  const [typeId, setTypeId] = useState<number>(item.type.id);
   const [author, setAuthor] = useState("author" in item ? item.author : undefined);
   const [title, setTitle] = useState(item.title);
   const [saga, setSaga] = useState("saga" in item ? item.saga : undefined);
@@ -60,6 +62,10 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, st
     setGenreIds(event.target.value as number[]);
   }
 
+  const handleChangeType = (event: SelectChangeEvent<typeof typeId>) => {
+    setTypeId(event.target.value as number);
+  }
+
   const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImage(event.target.value);
   }
@@ -77,7 +83,8 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, st
       lang: lang,
       genreIds: genreIds,
       image: image,
-      summary: summary
+      summary: summary,
+      typeId: typeId
     }).then(() => {
       handleCloseModal();
     });
@@ -198,7 +205,7 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, st
                 </Grid>
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <Grid container>
                   <Grid item xs={12} mt={2}>
                     <Typography>Titre</Typography>
@@ -211,6 +218,20 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, st
                       size="small"
                       fullWidth
                     />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={3}>
+                <Grid container>
+                  <Grid item xs={12} mt={2}>
+                    <Typography>Type de lecture</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Select size="small" value={typeId} onChange={handleChangeType} fullWidth>
+                      {types.map((type) => (
+                        <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
+                      ))}
+                    </Select>
                   </Grid>
                 </Grid>
               </Grid>

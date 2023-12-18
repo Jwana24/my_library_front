@@ -65,7 +65,8 @@ const Readings = () => {
   }
 
   const updateItem = async(id: number, formValues: Record<string, any>) => {
-    const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }))
+    const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }));
+    const type: Type = { id: formValues.typeId };
     const reading: TReadings = {
       status: formValues.status,
       author: formValues.author,
@@ -74,8 +75,11 @@ const Readings = () => {
       lang: formValues.lang,
       genres: genres,
       image: formValues.image,
-      summary: formValues.summary
+      summary: formValues.summary,
+      type: type
     }
+
+    console.log(reading)
 
     return axios.patch(`${import.meta.env.VITE_APP_URL}/reading/${id}`, reading)
       .then((res) => {
