@@ -1,5 +1,5 @@
 export type TWatchings = {
-  id: number;
+  id?: number;
   status: string;
   producer: string;
   title: string;

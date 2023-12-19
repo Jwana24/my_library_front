@@ -63,9 +63,28 @@ const Watchings = () => {
       });
   }
 
-  const updateItem = async(id: number) => {
-    return axios.put(`${import.meta.env.VITE_APP_URL}/watching/${id}`)
-      .then((res) => console.log(res))
+  const updateItem = async(id: number, formValues: Record<string, any>) => {
+    const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }));
+    const type: Type = { id: formValues.typeId };
+    const watching: TWatchings = {
+      status: formValues.status,
+      producer: formValues.producer,
+      title: formValues.title,
+      saga: formValues.saga,
+      genres: genres,
+      image: formValues.image,
+      summary: formValues.summary,
+      type: type
+    }
+
+    return axios.patch(`${import.meta.env.VITE_APP_URL}/watching/${id}`, watching)
+      .then((res) => {
+        const modifiedWatchings = watchings.map((watching) => {
+          return watching.id === id ? res.data : watching;
+        });
+
+        setWatchings(modifiedWatchings)
+      })
       .catch(error => {
         console.error(error);
       });

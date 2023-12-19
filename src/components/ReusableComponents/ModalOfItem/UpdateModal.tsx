@@ -27,6 +27,7 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
   const [statusSelected, setStatusSelected] = useState(item.status);
   const [typeId, setTypeId] = useState<number>(item.type.id);
   const [author, setAuthor] = useState("author" in item ? item.author : undefined);
+  const [producer, setProducer] = useState("producer" in item ? item.producer : undefined);
   const [title, setTitle] = useState(item.title);
   const [saga, setSaga] = useState("saga" in item ? item.saga : undefined);
   const [lang, setLang] = useState("lang" in item ? item.lang : undefined);
@@ -44,6 +45,10 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
 
   const handleChangeAuthor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuthor(event.target.value);
+  }
+
+  const handleChangeProducer = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setProducer(event.target.value);
   }
 
   const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +83,7 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
     item.id && updateItem(item.id, {
       status: statusSelected,
       author: author,
+      producer: producer,
       title: title,
       saga: saga,
       lang: lang,
@@ -144,13 +150,31 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
               {"author" in item && (
                 <Grid item xs={6}>
                   <Grid container>
-                    <Grid item xs={12} mt={2}>
+                    <Grid item xs={12} mt={1}>
                       <Typography>Auteur</Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         defaultValue={item.author}
                         onChange={handleChangeAuthor}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )}
+              {"producer" in item && (
+                <Grid item xs={6}>
+                  <Grid container>
+                    <Grid item xs={12} mt={1}>
+                      <Typography>Producteur</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        defaultValue={item.producer}
+                        onChange={handleChangeProducer}
                         variant="outlined"
                         size="small"
                         fullWidth

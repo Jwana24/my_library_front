@@ -50,8 +50,11 @@ const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres, 
             <Grid item xs={12} className="ModalHeader">
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 {item.title}
-                {`${"saga" in item ? ` (saga)` : null}`}
-                <Typography component="div">{`${"author" in item ? `de ${item.author}` : null}`}</Typography>
+                {`${"saga" in item ? ` (saga)` : ''}`}
+                <Typography component="div">
+                  {`${"author" in item ? `de ${item.author}` : '' }`}
+                  {`${"producer" in item ? `de ${item.producer}` : '' }`}
+                </Typography>
               </Typography>
             </Grid>
             <Grid item xs={12} className="ModalBody">
@@ -65,12 +68,12 @@ const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres, 
                     <Typography>{item.status}</Typography>
                   </>
                   <>
-                    <Typography className="Subtitle">Type de lecture :</Typography>
+                    <Typography className="Subtitle">Type :</Typography>
                     <Typography>{item.type.name}</Typography>
                   </>
                   {"lang" in item && (
                     <>
-                      <Typography className="Subtitle">Langue de lecture :</Typography>
+                      <Typography className="Subtitle">Langue :</Typography>
                       <Typography>{item.lang}</Typography>
                     </>
                   )}

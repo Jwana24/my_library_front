@@ -79,8 +79,6 @@ const Readings = () => {
       type: type
     }
 
-    console.log(reading)
-
     return axios.patch(`${import.meta.env.VITE_APP_URL}/reading/${id}`, reading)
       .then((res) => {
         const modifiedReadings = readings.map((reading) => {
