@@ -24,7 +24,7 @@ export type TReadings = {
 }
 
 export type TListenings = {
-  id: number;
+  id?: number;
   status: string;
   artist: string;
   title: string;

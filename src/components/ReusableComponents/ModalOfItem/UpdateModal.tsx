@@ -28,6 +28,7 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
   const [typeId, setTypeId] = useState<number>(item.type.id);
   const [author, setAuthor] = useState("author" in item ? item.author : undefined);
   const [producer, setProducer] = useState("producer" in item ? item.producer : undefined);
+  const [artist, setArtist] = useState("artist" in item ? item.artist : undefined);
   const [title, setTitle] = useState(item.title);
   const [saga, setSaga] = useState("saga" in item ? item.saga : undefined);
   const [lang, setLang] = useState("lang" in item ? item.lang : undefined);
@@ -49,6 +50,10 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
 
   const handleChangeProducer = (event: React.ChangeEvent<HTMLInputElement>) => {
     setProducer(event.target.value);
+  }
+
+  const handleChangeArtist = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setArtist(event.target.value);
   }
 
   const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +89,7 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
       status: statusSelected,
       author: author,
       producer: producer,
+      artist: artist,
       title: title,
       saga: saga,
       lang: lang,
@@ -183,9 +189,27 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
                   </Grid>
                 </Grid>
               )}
+              {"artist" in item && (
+                <Grid item xs={6}>
+                  <Grid container>
+                    <Grid item xs={12} mt={1}>
+                      <Typography>Artiste / groupe</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        defaultValue={item.artist}
+                        onChange={handleChangeArtist}
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )}
               <Grid item xs={5}>
                 <Grid container>
-                  <Grid item xs={12} mt={2}>
+                  <Grid item xs={12} mt={1}>
                     <Typography>Status</Typography>
                   </Grid>
                   <Grid item xs={12}>
@@ -248,7 +272,7 @@ const UpdateModal = ({ openModal, handleCloseModal, item, updateItem, genres, ty
               <Grid item xs={3}>
                 <Grid container>
                   <Grid item xs={12} mt={2}>
-                    <Typography>Type de lecture</Typography>
+                    <Typography>Type</Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <Select size="small" value={typeId} onChange={handleChangeType} fullWidth>

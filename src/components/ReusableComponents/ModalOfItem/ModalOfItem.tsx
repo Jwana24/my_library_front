@@ -54,6 +54,7 @@ const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres, 
                 <Typography component="div">
                   {`${"author" in item ? `de ${item.author}` : '' }`}
                   {`${"producer" in item ? `de ${item.producer}` : '' }`}
+                  {`${"artist" in item ? `de ${item.artist}` : '' }`}
                 </Typography>
               </Typography>
             </Grid>
