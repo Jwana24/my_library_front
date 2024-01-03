@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { getLocationPathname } from "../../../utils/hooks";
 import { Type, Genre, TListenings, TReadings, TWatchings } from "../../../types";
 
@@ -8,6 +8,7 @@ import FilterGenre from "../FilterGenre/FilterGenre";
 import FilterStatus from "../FilterStatus/FilterStatus";
 import SearchBarTitle from "../SearchBarTitle/SearchBarTitle";
 import CardOfItem from "../CardOfItem/CardOfItem";
+import Plus from "../../../assets/plus.png";
 
 interface ILibraryList {
   getIconForEachType: (type: Type) => string
@@ -75,6 +76,9 @@ const LibraryList = ({
                 setSearchTitle={setSearchTitle}
                 searchTitle={searchTitle}
               />
+              <Button variant="contained" startIcon={<img src={Plus} style={{ width: "22px" }} alt="Icône d'un plus encerclé" />}>
+                Ajouter un élément
+              </Button>
             </div>
           </Grid>
         </Grid>

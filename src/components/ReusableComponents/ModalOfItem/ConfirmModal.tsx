@@ -13,7 +13,7 @@ interface IConfirmModal {
 
 const ConfirmModal = ({ openModal, handleCloseModal, handleClose, item, deleteItem }: IConfirmModal) => {
   const handleClickDelete = () => {
-    deleteItem(item.id).then(() => {
+    item.id && deleteItem(item.id).then(() => {
       handleCloseModal();
       handleClose();
     });
