@@ -6,9 +6,13 @@
   align-items: center;
 
   .Card {
-    width: 250px;
-    height: 200px;
+    width: 230px;
+    height: 170px;
     border-radius: 10px;
+    @media screen and (min-width: 1025px) {
+      width: 250px;
+      height: 200px;
+    }
     .MuiButtonBase-root {
       height: 100%;
       .MuiCardActionArea-focusHighlight {
@@ -17,6 +21,22 @@
       .MuiCardContent-root {
         @include flex(column, center, center);
         text-align: center;
+        > div {
+          width: 90px;
+          height: auto;
+          @media screen and (min-width: 1025px) {
+            width: initial;
+            height: initial;
+          }
+          img {
+            width: 100%;
+            height: auto;
+            @media screen and (min-width: 1025px) {
+              width: initial;
+              height: initial;
+            }
+          }
+        }
       }
     }
     &:hover {

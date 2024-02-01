@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { getLocationPathname } from "../../../utils/hooks";
 import { Type, Genre, TListenings, TReadings, TWatchings } from "../../../types";
@@ -8,6 +9,7 @@ import FilterGenre from "../FilterGenre/FilterGenre";
 import FilterStatus from "../FilterStatus/FilterStatus";
 import SearchBarTitle from "../SearchBarTitle/SearchBarTitle";
 import CardOfItem from "../CardOfItem/CardOfItem";
+import CreateModal from "../ModalOfItem/CreateModal.tsx";
 import Plus from "../../../assets/plus.png";
 
 interface ILibraryList {
@@ -26,6 +28,8 @@ interface ILibraryList {
   libraryElements:  TWatchings[] | TReadings[] | TListenings[]
   deleteItem: (id: number) => Promise<void>
   updateItem: (id: number, formValues: object) => Promise<void>
+  createItem: (formValues: object) => Promise<void>
+  librarySection: string
 }
 
 const LibraryList = ({
@@ -43,8 +47,19 @@ const LibraryList = ({
   searchTitle,
   libraryElements,
   deleteItem,
-  updateItem
+  updateItem,
+  createItem,
+  librarySection
 }: ILibraryList) => {
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  const handleOpenCreateModal = () => setOpenCreateModal(true);
+  const handleCloseCreateModal = () => setOpenCreateModal(false);
+
+  const handleClickCreate = () => {
+    handleOpenCreateModal();
+  }
+
   return (
     <Grid container>
       <Breadcrumb currentPath={getLocationPathname()} />
@@ -76,7 +91,12 @@ const LibraryList = ({
                 setSearchTitle={setSearchTitle}
                 searchTitle={searchTitle}
               />
-              <Button variant="contained" startIcon={<img src={Plus} style={{ width: "22px" }} alt="Icône d'un plus encerclé" />}>
+              <Button
+                onClick={handleClickCreate}
+                variant="contained"
+                size="small"
+                startIcon={<img src={Plus} style={{ width: "22px" }} alt="Icône d'un plus encerclé" />}
+              >
                 Ajouter un élément
               </Button>
             </div>
@@ -85,12 +105,29 @@ const LibraryList = ({
         <Grid item xs={12} sx={{ display: "flex", marginTop: "15px" }}>
           {libraryElements.map((libraryElement) => (
             <div key={libraryElement.id} style={{ ...(libraryElement.id !== libraryElements[libraryElements.length - 1].id && { marginRight: "15px" }) }}>
-              <CardOfItem item={libraryElement} deleteItem={deleteItem} updateItem={updateItem} genres={genres} types={types} status={status} />
+              <CardOfItem
+                item={libraryElement}
+                deleteItem={deleteItem}
+                updateItem={updateItem}
+                genres={genres}
+                types={types}
+                status={status}
+              />
               <Typography variant="body2" sx={{ width: "200px" }}>{libraryElement.title}</Typography>
             </div>
           ))}
         </Grid>
       </Grid>
+      <CreateModal
+        openModal={openCreateModal}
+        handleCloseModal={handleCloseCreateModal}
+        createItem={createItem}
+        genres={genres}
+        types={types}
+        selectedType={selectedType}
+        status={status}
+        librarySection={librarySection}
+      />
     </Grid>
   )
 }

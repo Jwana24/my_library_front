@@ -81,6 +81,30 @@ const Listenings = () => {
       });
   }
 
+  const createItem = async(formValues: Record<string, any>) => {
+    const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }));
+    const type: Type = { id: formValues.typeId };
+    const listening: TListenings = {
+      status: formValues.status,
+      artist: formValues.artist,
+      title: formValues.title,
+      genres: genres,
+      image: formValues.image,
+      type: type
+    }
+
+    return axios.post<TListenings>(`${import.meta.env.VITE_APP_URL}/listening`, listening)
+      .then((res) => {
+        setListenings([
+          ...listenings,
+          res.data
+        ])
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachListeningType}
@@ -98,6 +122,8 @@ const Listenings = () => {
       libraryElements={listenings}
       deleteItem={deleteItem}
       updateItem={updateItem}
+      createItem={createItem}
+      librarySection="Listenings"
     />
   )
 }

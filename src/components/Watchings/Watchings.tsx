@@ -90,6 +90,32 @@ const Watchings = () => {
       });
   }
 
+  const createItem = async(formValues: Record<string, any>) => {
+    const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }));
+    const type: Type = { id: formValues.typeId };
+    const watching: TWatchings = {
+      status: formValues.status,
+      producer: formValues.artist,
+      title: formValues.title,
+      saga: formValues.saga,
+      genres: genres,
+      image: formValues.image,
+      summary: formValues.summary,
+      type: type
+    }
+
+    return axios.post<TWatchings>(`${import.meta.env.VITE_APP_URL}/watching`, watching)
+      .then((res) => {
+        setWatchings([
+          ...watchings,
+          res.data
+        ])
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachWatchingType}
@@ -107,6 +133,8 @@ const Watchings = () => {
       libraryElements={watchings}
       deleteItem={deleteItem}
       updateItem={updateItem}
+      createItem={createItem}
+      librarySection="Watchings"
     />
   )
 }

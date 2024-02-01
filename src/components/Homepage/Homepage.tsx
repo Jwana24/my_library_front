@@ -9,32 +9,32 @@ const Homepage = () => {
   return (
     <div className="Homepage">
       <h1>Bibliothèque personnelle</h1>
-      <Grid container flexDirection="row" justifyContent="center">
-        <Grid item xs={3}>
+      <Grid container flexDirection="row" justifyContent="center" spacing={{ xs: 3 }}>
+        <Grid item md={3}>
           <Card className="Card">
             <CardActionArea href="/lecture">
               <CardContent>
-                <img src={Book} alt="Book icon" />
+                <div><img src={Book} alt="Book icon" /></div>
                 <h2>Lectures</h2>
               </CardContent>
             </CardActionArea>
           </Card>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item md={3}>
           <Card className="Card">
             <CardActionArea href="/visionnage">
               <CardContent>
-                <img src={Claper} alt="Claper icon" />
+                <div><img src={Claper} alt="Claper icon" /></div>
                 <h2>Visionnages</h2>
               </CardContent>
             </CardActionArea>
           </Card>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item md={3}>
           <Card className="Card">
             <CardActionArea href="/ecoute">
               <CardContent>
-                <img src={Music} alt="Music album icon" />
+                <div><img src={Music} alt="Music album icon" /></div>
                 <h2>Sons</h2>
               </CardContent>
             </CardActionArea>

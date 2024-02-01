@@ -92,6 +92,33 @@ const Readings = () => {
       });
   }
 
+  const createItem = async(formValues: Record<string, any>) => {
+    const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }));
+    const type: Type = { id: formValues.typeId };
+    const reading: TReadings = {
+      status: formValues.status,
+      author: formValues.author,
+      title: formValues.title,
+      saga: formValues.saga,
+      lang: formValues.lang,
+      genres: genres,
+      image: formValues.image,
+      summary: formValues.summary,
+      type: type
+    }
+
+    return axios.post<TReadings>(`${import.meta.env.VITE_APP_URL}/reading`, reading)
+      .then((res) => {
+        setReadings([
+          ...readings,
+          res.data
+        ])
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
     <LibraryList
       getIconForEachType={getIconForEachReadingType}
@@ -109,6 +136,8 @@ const Readings = () => {
       libraryElements={readings}
       deleteItem={deleteItem}
       updateItem={updateItem}
+      createItem={createItem}
+      librarySection="Readings"
     />
   )
 }
