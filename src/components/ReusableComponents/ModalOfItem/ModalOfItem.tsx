@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Box, Button, Grid, Modal, Typography } from "@mui/material";
 import { Genre, TListenings, TReadings, TWatchings, Type } from "../../../types";
-import ConfirmModal from "./ConfirmModal.tsx";
-import UpdateModal from "./UpdateModal.tsx";
+import ConfirmModal from "./ConfirmModal";
+import FormModal from "./FormModal";
 import Trash from "../../../assets/poubelle.png";
 import Pencil from "../../../assets/crayon.png";
 
@@ -13,13 +13,14 @@ interface IModalOfItem {
   handleClose: () => void
   item: TWatchings | TReadings | TListenings
   deleteItem: (id: number) => Promise<void>
-  updateItem: (id: number, formValues: object) => Promise<void>
+  updateItem: (id?: number) => (formValues: object) => Promise<void>
   genres: Genre[]
   types: Type[]
   status: Array<{ name: string }>
+  librarySection: string
 }
 
-const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres, types, status }: IModalOfItem) => {
+const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres, types, status, librarySection}: IModalOfItem) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
@@ -125,14 +126,17 @@ const ModalOfItem = ({ open, handleClose, item, deleteItem, updateItem, genres, 
           item={item}
           deleteItem={deleteItem}
         />
-        <UpdateModal
+        <FormModal
+          item={item}
           openModal={openUpdateModal}
           handleCloseModal={handleCloseUpdateModal}
-          item={item}
-          updateItem={updateItem}
+          titleModal={`Mise à jour de ${item.title}`}
+          status={status}
           genres={genres}
           types={types}
-          status={status}
+          buttonSubmitName="Mettre à jour"
+          onSubmit={updateItem(item.id)}
+          librarySection={librarySection}
         />
       </>
     </Modal>

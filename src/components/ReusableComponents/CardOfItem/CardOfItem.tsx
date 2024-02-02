@@ -8,13 +8,14 @@ import "./CardOfItem.scss";
 interface ICardOfItem {
   item: TWatchings | TReadings | TListenings
   deleteItem: (id: number) => Promise<void>
-  updateItem: (id: number, formValues: object) => Promise<void>
+  updateItem: (id?: number) => (formValues: object) => Promise<void>
   genres: Genre[]
   types: Type[]
   status: Array<{ name: string }>
+  librarySection: string
 }
 
-const CardOfItem = ({ item, deleteItem, updateItem, genres, types, status }: ICardOfItem) => {
+const CardOfItem = ({ item, deleteItem, updateItem, genres, types, status, librarySection }: ICardOfItem) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -43,6 +44,7 @@ const CardOfItem = ({ item, deleteItem, updateItem, genres, types, status }: ICa
         genres={genres}
         types={types}
         status={status}
+        librarySection={librarySection}
       />
     </>
   )

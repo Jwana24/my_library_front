@@ -1,6 +1,7 @@
 @import '../../../App.scss';
 
 .ListOfTypes {
+  padding-top: 0 !important;
   :first-child {
     span {
       font-weight: 500;

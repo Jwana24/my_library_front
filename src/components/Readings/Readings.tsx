@@ -64,7 +64,7 @@ const Readings = () => {
       });
   }
 
-  const updateItem = async(id: number, formValues: Record<string, any>) => {
+  const updateItem = (id?: number) => async(formValues: Record<string, any>) => {
     const genres: Genre[] = formValues.genreIds.map((genreId: number) => ({ id: genreId }));
     const type: Type = { id: formValues.typeId };
     const reading: TReadings = {
@@ -79,17 +79,19 @@ const Readings = () => {
       type: type
     }
 
-    return axios.patch(`${import.meta.env.VITE_APP_URL}/reading/${id}`, reading)
-      .then((res) => {
-        const modifiedReadings = readings.map((reading) => {
-          return reading.id === id ? res.data : reading;
-        });
+    if (id) {
+      return axios.patch(`${import.meta.env.VITE_APP_URL}/reading/${id}`, reading)
+        .then((res) => {
+          const modifiedReadings = readings.map((reading) => {
+            return reading.id === id ? res.data : reading;
+          });
 
-        setReadings(modifiedReadings)
-      })
-      .catch(error => {
-        console.error(error);
-      });
+          setReadings(modifiedReadings)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   }
 
   const createItem = async(formValues: Record<string, any>) => {

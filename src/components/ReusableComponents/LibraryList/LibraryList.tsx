@@ -9,7 +9,7 @@ import FilterGenre from "../FilterGenre/FilterGenre";
 import FilterStatus from "../FilterStatus/FilterStatus";
 import SearchBarTitle from "../SearchBarTitle/SearchBarTitle";
 import CardOfItem from "../CardOfItem/CardOfItem";
-import CreateModal from "../ModalOfItem/CreateModal.tsx";
+import FormModal from "../ModalOfItem/FormModal";
 import Plus from "../../../assets/plus.png";
 
 interface ILibraryList {
@@ -27,7 +27,7 @@ interface ILibraryList {
   searchTitle: string
   libraryElements:  TWatchings[] | TReadings[] | TListenings[]
   deleteItem: (id: number) => Promise<void>
-  updateItem: (id: number, formValues: object) => Promise<void>
+  updateItem: (id?: number) => (formValues: object) => Promise<void>
   createItem: (formValues: object) => Promise<void>
   librarySection: string
 }
@@ -94,7 +94,7 @@ const LibraryList = ({
               <Button
                 onClick={handleClickCreate}
                 variant="contained"
-                size="small"
+                size="medium"
                 startIcon={<img src={Plus} style={{ width: "22px" }} alt="Icône d'un plus encerclé" />}
               >
                 Ajouter un élément
@@ -112,20 +112,22 @@ const LibraryList = ({
                 genres={genres}
                 types={types}
                 status={status}
+                librarySection={librarySection}
               />
               <Typography variant="body2" sx={{ width: "200px" }}>{libraryElement.title}</Typography>
             </div>
           ))}
         </Grid>
       </Grid>
-      <CreateModal
+      <FormModal
         openModal={openCreateModal}
         handleCloseModal={handleCloseCreateModal}
-        createItem={createItem}
+        titleModal="Nouvel élément"
+        status={status}
         genres={genres}
         types={types}
-        selectedType={selectedType}
-        status={status}
+        buttonSubmitName="Ajouter"
+        onSubmit={createItem}
         librarySection={librarySection}
       />
     </Grid>
