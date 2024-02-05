@@ -8,8 +8,8 @@ import SidebarMenu from "../SibebarMenu/SidebarMenu";
 import FilterGenre from "../FilterGenre/FilterGenre";
 import FilterStatus from "../FilterStatus/FilterStatus";
 import SearchBarTitle from "../SearchBarTitle/SearchBarTitle";
-import CardOfItem from "../CardOfItem/CardOfItem";
-import FormModal from "../ModalOfItem/FormModal";
+import ModalOfItem from "../Modals/ModalOfItem.tsx";
+import FormModal from "../Modals/FormModal";
 import Plus from "../../../assets/plus.png";
 
 interface ILibraryList {
@@ -105,7 +105,7 @@ const LibraryList = ({
         <Grid item xs={12} sx={{ display: "flex", marginTop: "15px" }}>
           {libraryElements.map((libraryElement) => (
             <div key={libraryElement.id} style={{ ...(libraryElement.id !== libraryElements[libraryElements.length - 1].id && { marginRight: "15px" }) }}>
-              <CardOfItem
+              <ModalOfItem
                 item={libraryElement}
                 deleteItem={deleteItem}
                 updateItem={updateItem}
@@ -114,7 +114,7 @@ const LibraryList = ({
                 status={status}
                 librarySection={librarySection}
               />
-              <Typography variant="body2" sx={{ width: "200px" }}>{libraryElement.title}</Typography>
+              <Typography variant="body2" sx={{ width: "200px", fontSize: "20px", mt: 1, fontWeight: "bold" }}>{libraryElement.title}</Typography>
             </div>
           ))}
         </Grid>

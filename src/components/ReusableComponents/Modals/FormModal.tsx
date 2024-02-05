@@ -50,50 +50,6 @@ import {
     const [image, setImage] = useState(item ? item.image : "");
     const [summary, setSummary] = useState(["Readings", "Watchings"].includes(librarySection) && item ? (item as TReadings | TWatchings).summary : "");
   
-    const handleChangeStatus = (event: SelectChangeEvent) => {
-      setStatusSelected(event.target.value);
-    }
-  
-    const handleChangeType = (event: SelectChangeEvent<typeof typeId>) => {
-      setTypeId(event.target.value as number);
-    }
-  
-    const handleChangeAuthor = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setAuthor(event.target.value);
-    }
-  
-    const handleChangeProducer = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setProducer(event.target.value);
-    }
-  
-    const handleChangeArtist = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setArtist(event.target.value);
-    }
-  
-    const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTitle(event.target.value);
-    }
-  
-    const handleChangeSaga = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSaga(event.target.checked);
-    }
-  
-    const handleChangeLang = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setLang(event.target.value);
-    }
-  
-    const handleChangeGenre = (event: SelectChangeEvent<typeof genreIds>) => {
-      setGenreIds(event.target.value as number[]);
-    }
-  
-    const handleChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setImage(event.target.value);
-    }
-  
-    const handleChangeSummary = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setSummary(event.target.value);
-    }
-  
     const handleClick = () => {
       onSubmit({
         status: statusSelected,
@@ -135,7 +91,7 @@ import {
                         <Grid item xs={12}>
                           <FormControlLabel
                             control={
-                              <Checkbox checked={saga} onChange={handleChangeSaga} />
+                              <Checkbox checked={saga} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSaga(event.target.checked)} />
                             }
                             label="Est-ce une saga ?"
                             labelPlacement="start"
@@ -157,7 +113,7 @@ import {
                         <Grid item xs={12}>
                           <TextField
                             defaultValue={item ? (item as TReadings).lang : ""}
-                            onChange={handleChangeLang}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setLang(event.target.value)}
                             variant="outlined"
                             size="small"
                             fullWidth
@@ -173,7 +129,7 @@ import {
                         <Grid item xs={12}>
                           <TextField
                             defaultValue={item ? (item as TReadings).author : ""}
-                            onChange={handleChangeAuthor}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setAuthor(event.target.value)}
                             variant="outlined"
                             size="small"
                             fullWidth
@@ -194,7 +150,7 @@ import {
                         <Grid item xs={12}>
                           <TextField
                             defaultValue={item ? (item as TWatchings).producer : ""}
-                            onChange={handleChangeProducer}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setProducer(event.target.value)}
                             variant="outlined"
                             size="small"
                             fullWidth
@@ -215,7 +171,7 @@ import {
                         <Grid item xs={12}>
                           <TextField
                             defaultValue={item ? (item as TListenings).artist : ""}
-                            onChange={handleChangeArtist}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setArtist(event.target.value)}
                             variant="outlined"
                             size="small"
                             fullWidth
@@ -232,7 +188,7 @@ import {
                       <Typography>Status</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Select size="small" value={statusSelected} onChange={handleChangeStatus} fullWidth>
+                      <Select size="small" value={statusSelected} onChange={(event: SelectChangeEvent) => setStatusSelected(event.target.value)} fullWidth>
                         {status.map((statusSelected, index) => (
                           <MenuItem key={index} value={statusSelected.name}>{statusSelected.name}</MenuItem>
                         ))}
@@ -249,7 +205,7 @@ import {
                     <Grid item xs={12}>
                       <TextField
                         defaultValue={item ? item.image : ""}
-                        onChange={handleChangeImage}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setImage(event.target.value)}
                         variant="outlined"
                         size="small"
                         fullWidth
@@ -263,7 +219,13 @@ import {
                       <Typography>Genre(s)</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Select size="small" value={genreIds} onChange={handleChangeGenre} fullWidth multiple>
+                      <Select
+                        size="small"
+                        value={genreIds}
+                        onChange={(event: SelectChangeEvent<typeof genreIds>) => setGenreIds(event.target.value as number[])}
+                        fullWidth
+                        multiple
+                      >
                         {genres.map((genre) => (
                           <MenuItem key={genre.id} value={genre.id}>{genre.name}</MenuItem>
                         ))}
@@ -280,7 +242,7 @@ import {
                     <Grid item xs={12}>
                       <TextField
                         defaultValue={item ? item.title : ""}
-                        onChange={handleChangeTitle}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value)}
                         variant="outlined"
                         size="small"
                         fullWidth
@@ -294,7 +256,7 @@ import {
                       <Typography>Type</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Select size="small" value={typeId} onChange={handleChangeType} fullWidth>
+                      <Select size="small" value={typeId} onChange={(event: SelectChangeEvent<typeof typeId>) => setTypeId(event.target.value as number)} fullWidth>
                         {types.map((type) => (
                           <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
                         ))}
@@ -313,7 +275,7 @@ import {
                         <Grid item xs={12}>
                           <TextField
                             defaultValue={item ? (item as TReadings | TWatchings).summary : ""}
-                            onChange={handleChangeSummary}
+                            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => setSummary(event.target.value)}
                             variant="outlined"
                             size="small"
                             fullWidth
