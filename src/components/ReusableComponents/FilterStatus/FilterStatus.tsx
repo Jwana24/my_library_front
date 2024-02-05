@@ -1,4 +1,4 @@
-import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 interface IFilterStatus {
   setSelectedStatus: React.Dispatch<React.SetStateAction<string>>
@@ -12,21 +12,20 @@ const FilterStatus = ({ setSelectedStatus, selectedStatus, status }: IFilterStat
   };
 
   return (
-    <FormControl sx={{ mr: 1, minWidth: 120 }} size="small">
-      <Select
-        value={selectedStatus}
-        onChange={handleChangeStatus}
-        displayEmpty
-        inputProps={{ 'aria-label': 'Without label' }}
-      >
-        <MenuItem value="">
-          <em>Tous les status</em>
-        </MenuItem>
-        {status.map((st, index) => (
-          <MenuItem key={index} value={st.name}>{st.name}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Select
+      value={selectedStatus}
+      onChange={handleChangeStatus}
+      displayEmpty
+      size="small"
+      inputProps={{ 'aria-label': 'Without label' }}
+      sx={{ minWidth: 120 }}
+      fullWidth
+    >
+      <MenuItem value=""><em>Tous les status</em></MenuItem>
+      {status.map((st, index) => (
+        <MenuItem key={index} value={st.name}>{st.name}</MenuItem>
+      ))}
+    </Select>
   )
 }
 

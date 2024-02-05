@@ -1,23 +1,22 @@
 @import '../../../App.scss';
 
+.SelectMobile {
+  img {
+    width: 22px;
+    margin-right: 10px;
+  }
+}
+
 .ListOfTypes {
   padding-top: 0 !important;
-  :first-child {
-    span {
-      font-weight: 500;
-    }
-  }
 
   img {
     width: 22px;
   }
 
   .MenuGrid {
-    display: flex;
-    align-items: center;
-    margin-right: 10px !important;
+    margin-right: 10px;
     padding: 5px 10px;
-    text-align: left;
     border-radius: 5px;
     &:hover {
       cursor: pointer;

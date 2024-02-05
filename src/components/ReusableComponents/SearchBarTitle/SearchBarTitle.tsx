@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { FormControl, InputAdornment, OutlinedInput } from "@mui/material";
+import { InputAdornment, OutlinedInput } from "@mui/material";
 import MGlass from "../../../assets/mglass.png";
 
 interface ISearchBarTitle {
@@ -13,23 +13,22 @@ const SearchBarTitle = ({ setSearchTitle, searchTitle }: ISearchBarTitle) => {
   };
 
   return (
-    <FormControl sx={{ mr: 1, width: '25ch' }} variant="outlined" size="small">
-      <OutlinedInput
-        id="outlined-adornment-weight"
-        placeholder="Titre à rechercher"
-        defaultValue={searchTitle}
-        onChange={handleChangeTitle}
-        endAdornment={
-          <InputAdornment position="end">
-            <img src={MGlass} style={{ width: "22px" }} alt="Icône d'une loupe de recherche" />
-          </InputAdornment>
-        }
-        aria-describedby="outlined-weight-helper-text"
-        inputProps={{
-          'aria-label': 'weight',
-        }}
-      />
-    </FormControl>
+    <OutlinedInput
+      id="outlined-adornment-weight"
+      placeholder="Titre à rechercher"
+      defaultValue={searchTitle}
+      onChange={handleChangeTitle}
+      endAdornment={
+        <InputAdornment position="end">
+          <img src={MGlass} style={{ width: "22px" }} alt="Icône d'une loupe de recherche" />
+        </InputAdornment>
+      }
+      size="small"
+      aria-describedby="outlined-weight-helper-text"
+      inputProps={{ 'aria-label': 'weight' }}
+      sx={{ minWidth: '25ch' }}
+      fullWidth
+    />
   )
 }
 

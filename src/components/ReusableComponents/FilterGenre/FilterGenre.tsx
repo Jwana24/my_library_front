@@ -1,4 +1,4 @@
-import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { Genre } from "../../../types";
 
 interface IFilterGenre {
@@ -13,21 +13,22 @@ const FilterGenre = ({ setSelectedGenre, selectedGenre, genres }: IFilterGenre) 
   };
 
   return (
-    <FormControl sx={{ mr: 1, minWidth: 120 }} size="small">
-      <Select
-        value={selectedGenre}
-        onChange={handleChangeGenre}
-        displayEmpty
-        inputProps={{ 'aria-label': 'Without label' }}
-      >
-        <MenuItem value="">
-          <em>Tous les genres</em>
-        </MenuItem>
-        {genres.map((genre) => (
-          <MenuItem key={genre.id} value={genre.name}>{genre.name}</MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Select
+      value={selectedGenre}
+      onChange={handleChangeGenre}
+      displayEmpty
+      size="small"
+      inputProps={{ 'aria-label': 'Without label' }}
+      sx={{ minWidth: 120 }}
+      fullWidth
+    >
+      <MenuItem value="">
+        <em>Tous les genres</em>
+      </MenuItem>
+      {genres.map((genre) => (
+        <MenuItem key={genre.id} value={genre.name}>{genre.name}</MenuItem>
+      ))}
+    </Select>
   )
 }
 
