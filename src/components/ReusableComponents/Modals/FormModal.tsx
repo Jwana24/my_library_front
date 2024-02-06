@@ -75,7 +75,7 @@ import {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className="ModalGeneral" sx={{ width: "800px" }}>
+        <Box className="ModalGeneral" sx={{ width: { lg: "800px" } }}>
           <Grid container>
             <Grid item xs={12} className="ModalHeader">
               <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -86,26 +86,22 @@ import {
               <Grid container justifyContent="space-between">
                 {["Readings", "Watchings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={5}>
-                      <Grid container>
-                        <Grid item xs={12}>
-                          <FormControlLabel
-                            control={
-                              <Checkbox checked={saga} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSaga(event.target.checked)} />
-                            }
-                            label="Est-ce une saga ?"
-                            labelPlacement="start"
-                            sx={{ m: 0 }}
-                          />
-                        </Grid>
-                      </Grid>
+                    <Grid item xs={12} sm={5}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox checked={saga} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSaga(event.target.checked)} />
+                        }
+                        label="Est-ce une saga ?"
+                        labelPlacement="start"
+                        sx={{ m: 0 }}
+                      />
                     </Grid>
                   </>
                 )}
   
                 {["Readings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={5}>
+                    <Grid item xs={12} sm={5}>
                       <Grid container>
                         <Grid item xs={12}>
                           <Typography>Langue</Typography>
@@ -121,9 +117,9 @@ import {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6}>
                       <Grid container>
-                        <Grid item xs={12} mt={1}>
+                        <Grid item xs={12} mt={2}>
                           <Typography>Auteur</Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -142,7 +138,7 @@ import {
 
                 {["Watchings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6}>
                       <Grid container>
                         <Grid item xs={12} mt={1}>
                           <Typography>Producteur</Typography>
@@ -163,9 +159,9 @@ import {
   
                 {["Listenings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6}>
                       <Grid container>
-                        <Grid item xs={12} mt={1}>
+                        <Grid item xs={12} mt={2}>
                           <Typography>Artiste / groupe</Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -182,9 +178,9 @@ import {
                   </>
                 )}
   
-                <Grid item xs={5}>
+                <Grid item xs={6} sm={5}>
                   <Grid container>
-                    <Grid item xs={12} mt={1}>
+                    <Grid item xs={12} mt={2}>
                       <Typography>Status</Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -197,7 +193,7 @@ import {
                   </Grid>
                 </Grid>
   
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Lien de l'image</Typography>
@@ -213,7 +209,7 @@ import {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item  xs={6} sm={5}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Genre(s)</Typography>
@@ -234,7 +230,7 @@ import {
                   </Grid>
                 </Grid>
   
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={8}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Titre</Typography>
@@ -250,7 +246,7 @@ import {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={6} sm={3}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Type</Typography>

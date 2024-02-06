@@ -76,10 +76,10 @@ const ModalOfItem = ({ item, deleteItem, updateItem, genres, types, status, libr
               </Grid>
               <Grid item xs={12} className="ModalBody">
                 <Grid container>
-                  <Grid item xs={3}>
+                  <Grid item xs={12} sm={3} className="ImageItem">
                     <img src={item.image} alt={`Affiche ${item.title}`} />
                   </Grid>
-                  <Grid item xs={9}>
+                  <Grid item xs={12} sm={9}  className="InfosItem">
                     <>
                       <Typography className="Subtitle">Statut :</Typography>
                       <Typography>{item.status}</Typography>

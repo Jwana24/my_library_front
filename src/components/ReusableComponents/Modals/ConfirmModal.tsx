@@ -26,7 +26,7 @@ const ConfirmModal = ({ openModal, handleCloseModal, handleClose, item, deleteIt
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className="ModalGeneral" sx={{ width: "500px" }}>
+      <Box className="ModalGeneral" sx={{ width: { lg: "500px" } }}>
         <Grid container>
           <Grid item xs={12} className="ModalHeader">
             <Typography id="modal-modal-title" variant="h6" component="h2">

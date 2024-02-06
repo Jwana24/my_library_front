@@ -27,13 +27,16 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
+  width: 100%;
   max-height: 100%;
   overflow: scroll !important;
   background-color: white;
   border: 1px solid #ecf0f1;
-  border-radius: 10px;
-  box-shadow: 24px 24px grey;
+  @media screen and (min-width: 780px) {
+    width: 800px;
+    border-radius: 10px;
+    box-shadow: 24px 24px grey;
+  }
 
   .ModalHeader {
     border-bottom: 1px solid #ecf0f1;
@@ -50,6 +53,19 @@
     img {
       width: 150px;
     }
+    .ImageItem {
+      @include flex(null, null, center);
+      @media screen and (min-width: 600px) {
+        display: block;
+      }
+    }
+
+    .InfosItem {
+      @include flex(column, center, null);
+      @media screen and (min-width: 600px) {
+        display: block;
+      }
+    }
   }
 
   .Subtitle {
@@ -62,8 +78,12 @@
   }
 
   .ModalButtonsContainer {
-    @include flex(null, null, space-between);
+    display: block;
     padding: 15px;
+
+    @media screen and (min-width: 600px) {
+      @include flex(null, null, space-between);
+    }
 
     button{
       margin-top: 20px;
