@@ -65,7 +65,8 @@ const Listenings = () => {
       title: formValues.title,
       genres: genres,
       image: formValues.image,
-      type: type
+      type: type,
+      rating: formValues.rating
     }
 
     if (id) {

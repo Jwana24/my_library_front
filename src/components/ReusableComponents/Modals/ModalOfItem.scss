@@ -31,7 +31,7 @@
   max-height: 100%;
   overflow: scroll !important;
   background-color: white;
-  border: 1px solid #ecf0f1;
+  border: 1px solid $lightGrey;
   @media screen and (min-width: 780px) {
     width: 800px;
     border-radius: 10px;
@@ -39,7 +39,7 @@
   }
 
   .ModalHeader {
-    border-bottom: 1px solid #ecf0f1;
+    border-bottom: 1px solid $lightGrey;
     padding: 15px;
     text-align: center;
 
@@ -53,17 +53,19 @@
     img {
       width: 150px;
     }
-    .ImageItem {
-      @include flex(null, null, center);
-      @media screen and (min-width: 600px) {
-        display: block;
-      }
-    }
 
     .InfosItem {
       @include flex(column, center, null);
       @media screen and (min-width: 600px) {
         display: block;
+      }
+      p {
+        &.Subtitle {
+          &:not(:first-of-type) {
+            padding-top: 10px;
+            border-top: 1px solid $lightGrey;
+          }
+        }
       }
     }
   }
@@ -71,6 +73,7 @@
   .Subtitle {
     font-style: italic;
     font-weight: bolder;
+    font-size: 14px;
     color: $mainColor;
     &:not(:first-child) {
       margin-top: 10px;
@@ -99,6 +102,6 @@
   }
 
   .ModalFooter {
-    border-top: 1px solid #ecf0f1;
+    border-top: 1px solid $lightGrey;
   }
 }

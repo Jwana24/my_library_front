@@ -77,7 +77,17 @@ const ModalOfItem = ({ item, deleteItem, updateItem, genres, types, status, libr
               <Grid item xs={12} className="ModalBody">
                 <Grid container>
                   <Grid item xs={12} sm={3} className="ImageItem">
-                    <img src={item.image} alt={`Affiche ${item.title}`} />
+                    <Grid container>
+                      <Grid item xs={12} sx={{ display: { xs: "flex", lg: "block" }, justifyContent: { xs: "center", lg: "initial" } }}>
+                        <img src={item.image} alt={`Affiche ${item.title}`} />
+                      </Grid>
+                      {["Lu", "Vu", "Ecouté"].includes(item.status) && (
+                        <Grid item xs={12} sx={{ mt: 1, mb: 1, display: "flex", justifyContent: { xs: "center", lg: "initial" } }}>
+                          <Typography className="Subtitle">Note :</Typography>
+                          <Typography sx={{ fontWeight: 'bold', fontSize: '16px', ml: 1 }}>{item.rating}/10</Typography>
+                        </Grid>
+                      )}
+                    </Grid>
                   </Grid>
                   <Grid item xs={12} sm={9}  className="InfosItem">
                     <>

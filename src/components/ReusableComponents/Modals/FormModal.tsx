@@ -49,6 +49,7 @@ import {
     const [genreIds, setGenreIds] = useState<number[]>(item ? item.genres.map((genre) => genre.id) : []);
     const [image, setImage] = useState(item ? item.image : "");
     const [summary, setSummary] = useState(["Readings", "Watchings"].includes(librarySection) && item ? (item as TReadings | TWatchings).summary : "");
+    const [rating, setRating] = useState<number | undefined>(item ? item.rating : undefined);
   
     const handleClick = () => {
       onSubmit({
@@ -62,7 +63,8 @@ import {
         lang: lang,
         genreIds: genreIds,
         image: image,
-        summary: summary
+        summary: summary,
+        rating: rating
       }).then(() => {
         handleCloseModal();
       });
@@ -282,6 +284,26 @@ import {
                       </Grid>
                     </Grid>
                   </>
+                )}
+
+                {["Lu", "Vu", "Ecouté"].includes(statusSelected) && (
+                  <Grid item xs={12} sm={12} mt={2}>
+                    <Grid container>
+                      <Grid item xs={12} mt={2} sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography sx={{ mr: 2 }}>Note</Typography>
+                        <TextField
+                          defaultValue={item ? item.rating : ""}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setRating(parseInt(event.target.value))}
+                          type="number"
+                          variant="outlined"
+                          size="small"
+                          sx={{ width: "90px" }}
+                          inputProps={{ min: 0, max: 10 }}
+                        />
+                        <Typography sx={{ ml: 2 }}>/ 10</Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 )}
               </Grid>
             </Grid>

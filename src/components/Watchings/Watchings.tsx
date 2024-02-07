@@ -74,7 +74,8 @@ const Watchings = () => {
       genres: genres,
       image: formValues.image,
       summary: formValues.summary,
-      type: type
+      type: type,
+      rating: formValues.rating
     }
 
     if (id) {

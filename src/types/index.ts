@@ -6,6 +6,7 @@ export type TWatchings = {
   image: string;
   saga: boolean;
   summary: string;
+  rating?: number;
   type: Type;
   genres: Genre[];
 }
@@ -19,6 +20,7 @@ export type TReadings = {
   saga: boolean;
   summary: string;
   lang: string;
+  rating?: number;
   type: Type;
   genres: Genre[];
 }
@@ -29,6 +31,7 @@ export type TListenings = {
   artist: string;
   title: string;
   image: string;
+  rating?: number;
   type: Type;
   genres: Genre[];
 }
