@@ -5,9 +5,10 @@ interface IFilterGenre {
   setSelectedGenre: React.Dispatch<React.SetStateAction<string>>
   selectedGenre: string
   genres: Genre[]
+  selectedType: string
 }
 
-const FilterGenre = ({ setSelectedGenre, selectedGenre, genres }: IFilterGenre) => {
+const FilterGenre = ({ setSelectedGenre, selectedGenre, genres, selectedType }: IFilterGenre) => {
   const handleChangeGenre = (event: SelectChangeEvent) => {
     setSelectedGenre(event.target.value);
   };
@@ -26,7 +27,9 @@ const FilterGenre = ({ setSelectedGenre, selectedGenre, genres }: IFilterGenre) 
         <em>Tous les genres</em>
       </MenuItem>
       {genres.map((genre) => (
-        <MenuItem key={genre.id} value={genre.name}>{genre.name}</MenuItem>
+        genre?.type?.name === selectedType && (
+          <MenuItem key={genre.id} value={genre.name}>{genre.name}</MenuItem>
+        )
       ))}
     </Select>
   )

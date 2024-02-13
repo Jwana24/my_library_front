@@ -34,3 +34,37 @@
     }
   }
 }
+
+.ContainerOfGenres {
+  margin-right: 10px;
+  border-radius: 10px;
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 35px;
+    padding: 15px 10px;
+    background-color: $lightGrey;
+  }
+
+  .ListOfGenres {
+    max-height: 250px;
+    border-top: 2px solid $darkerGrey;
+    overflow: scroll;
+
+    .ContainerNameOfTypes {
+      .NameOfTypes {
+        font-weight: bold;
+        color: $darkerGrey;
+        font-style: italic;
+      }
+      padding-bottom: 10px;
+      &:not(:first-of-type) {
+        padding-top: 10px;
+        border-top: 1px solid $darkGrey;
+      }
+    }
+
+    .NameOfGenres {
+      padding-top: 10px;
+    }
+  }
+}

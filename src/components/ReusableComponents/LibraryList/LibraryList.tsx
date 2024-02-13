@@ -29,6 +29,7 @@ interface ILibraryList {
   deleteItem: (id: number) => Promise<void>
   updateItem: (id?: number) => (formValues: object) => Promise<void>
   createItem: (formValues: object) => Promise<void>
+  createGenre: (genreName: string, typeId: number) => Promise<void>
   librarySection: string
 }
 
@@ -49,6 +50,7 @@ const LibraryList = ({
   deleteItem,
   updateItem,
   createItem,
+  createGenre,
   librarySection
 }: ILibraryList) => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
@@ -63,15 +65,16 @@ const LibraryList = ({
   return (
     <Grid container>
       <Breadcrumb currentPath={getLocationPathname()} />
-      <Grid item xs={12} lg={2}>
+      <Grid item xs={12} lg={3}>
         <SidebarMenu
           getIconForEachType={getIconForEachType}
           selectedType={selectedType}
           setSelectedType={setSelectedType}
           types={types}
+          createGenre={createGenre}
         />
       </Grid>
-      <Grid item xs={12} lg={10} sx={{ borderLeft: { lg: "1px solid #ecf0f1"}, paddingLeft: { lg: "15px"} }}>
+      <Grid item xs={12} lg={9} sx={{ borderLeft: { lg: "1px solid #ecf0f1"}, paddingLeft: { lg: "15px"} }}>
         <Grid container>
           <Grid item xs={12}>
             <div>
@@ -82,6 +85,7 @@ const LibraryList = ({
                       setSelectedGenre={setSelectedGenre}
                       selectedGenre={selectedGenre}
                       genres={genres}
+                      selectedType={selectedType}
                     />
                   </Grid>
                 )}
@@ -105,7 +109,7 @@ const LibraryList = ({
                     size="medium"
                     startIcon={<img src={Plus} style={{ width: "22px" }} alt="Icône d'un plus encerclé" />}
                   >
-                    Ajouter un élément
+                    Ajouter {librarySection === "Readings" ? "une lecture" : librarySection === "Watchings" ? "un visionnage" : librarySection === "Listenings" ? "une écoute" : null}
                   </Button>
                 </Grid>
               </Grid>

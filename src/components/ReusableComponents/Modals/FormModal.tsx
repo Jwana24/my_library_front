@@ -46,7 +46,7 @@ import {
     const [title, setTitle] = useState(item ? item.title : "");
     const [saga, setSaga] = useState(["Readings", "Watchings"].includes(librarySection) && item ? (item as TReadings | TWatchings).saga : false);
     const [lang, setLang] = useState(["Readings"].includes(librarySection) && item ? (item as TReadings).lang : "");
-    const [genreIds, setGenreIds] = useState<number[]>(item ? item.genres.map((genre) => genre.id) : []);
+    const [genreIds, setGenreIds] = useState<number[]>(item ? item.genres.map((genre) => genre.id!) : []);
     const [image, setImage] = useState(item ? item.image : "");
     const [summary, setSummary] = useState(["Readings", "Watchings"].includes(librarySection) && item ? (item as TReadings | TWatchings).summary : "");
     const [rating, setRating] = useState<number | undefined>(item ? item.rating : undefined);

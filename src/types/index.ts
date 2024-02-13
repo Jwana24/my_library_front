@@ -37,12 +37,13 @@ export type TListenings = {
 }
 
 export type Type = {
-  id: number;
+  id?: number;
   name?: string;
+  genres?: Genre[];
 };
 
 export type Genre = {
-  id: number;
+  id?: number;
   name?: string;
   type?: Type;
 }

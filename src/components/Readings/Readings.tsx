@@ -108,14 +108,38 @@ const Readings = () => {
       image: formValues.image,
       summary: formValues.summary,
       type: type
-    }
+    };
 
     return axios.post<TReadings>(`${import.meta.env.VITE_APP_URL}/reading`, reading)
       .then((res) => {
         setReadings([
           ...readings,
           res.data
-        ])
+        ]);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  const createGenre = async(genreName: string, typeId: number) => {
+    const genre: Genre = { name: genreName, type: { id: typeId } };
+
+    return axios.post<Genre>(`${import.meta.env.VITE_APP_URL}/reading-genre`, genre)
+      .then((res) => {
+        setGenres([
+          ...genres,
+          res.data
+        ]);
+        const modifiedType = types.map((type) => {
+          return type.id === typeId ?
+            {
+              ...types,
+              genres: [ ...type.genres!, res.data ]
+            }
+          : type;
+        });
+        setTypes(modifiedType);
       })
       .catch(error => {
         console.error(error);
@@ -140,6 +164,7 @@ const Readings = () => {
       deleteItem={deleteItem}
       updateItem={updateItem}
       createItem={createItem}
+      createGenre={createGenre}
       librarySection="Readings"
     />
   )
