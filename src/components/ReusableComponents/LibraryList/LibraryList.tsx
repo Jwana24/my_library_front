@@ -74,7 +74,7 @@ const LibraryList = ({
           createGenre={createGenre}
         />
       </Grid>
-      <Grid item xs={12} lg={9} sx={{ borderLeft: { lg: "1px solid #ecf0f1"}, paddingLeft: { lg: "15px"} }}>
+      <Grid item xs={12} lg={9} sx={{ borderLeft: { lg: "1px solid #ecf0f1"}, paddingLeft: { lg: "15px"}, marginBottom: { lg: "20px" } }}>
         <Grid container>
           <Grid item xs={12}>
             <div>
