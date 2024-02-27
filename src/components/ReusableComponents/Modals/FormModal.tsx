@@ -19,7 +19,6 @@ import {
     handleCloseModal: () => void
     titleModal: string
     status: Array<{ name: string }>
-    genres: Genre[]
     types: Type[]
     buttonSubmitName: string
     librarySection: string
@@ -32,7 +31,6 @@ import {
     handleCloseModal,
     titleModal,
     status,
-    genres,
     types,
     buttonSubmitName,
     librarySection,
@@ -46,10 +44,18 @@ import {
     const [title, setTitle] = useState(item ? item.title : "");
     const [saga, setSaga] = useState(["Readings", "Watchings"].includes(librarySection) && item ? (item as TReadings | TWatchings).saga : false);
     const [lang, setLang] = useState(["Readings"].includes(librarySection) && item ? (item as TReadings).lang : "");
+    const [genresByType, setGenresByType] = useState<Genre[]>(item ? (types.find((type) => type.id === item.type.id)?.genres || []) : []);
     const [genreIds, setGenreIds] = useState<number[]>(item ? item.genres.map((genre) => genre.id!) : []);
     const [image, setImage] = useState(item ? item.image : "");
     const [summary, setSummary] = useState(["Readings", "Watchings"].includes(librarySection) && item ? (item as TReadings | TWatchings).summary : "");
     const [rating, setRating] = useState<number | undefined>(item ? item.rating : undefined);
+
+    const handleChangeType = (event: SelectChangeEvent<typeof typeId>) => {
+      console.log("value target: ", event.target.value, "tous les types: ", types)
+      const targetType = types.find((type) => type.id === event.target.value);
+      setGenresByType(targetType!.genres || []);
+      setTypeId(event.target.value as number);
+    }
   
     const handleClick = () => {
       onSubmit({
@@ -88,7 +94,7 @@ import {
               <Grid container justifyContent="space-between">
                 {["Readings", "Watchings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={7}>
                       <FormControlLabel
                         control={
                           <Checkbox checked={saga} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSaga(event.target.checked)} />
@@ -103,7 +109,7 @@ import {
   
                 {["Readings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={12} sm={5}>
+                    <Grid item xs={12} sm={4}>
                       <Grid container>
                         <Grid item xs={12}>
                           <Typography>Langue</Typography>
@@ -119,7 +125,7 @@ import {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={7}>
                       <Grid container>
                         <Grid item xs={12} mt={2}>
                           <Typography>Auteur</Typography>
@@ -140,9 +146,9 @@ import {
 
                 {["Watchings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={7}>
                       <Grid container>
-                        <Grid item xs={12} mt={1}>
+                        <Grid item xs={12} mt={2}>
                           <Typography>Producteur</Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -161,7 +167,7 @@ import {
   
                 {["Listenings"].includes(librarySection) && (
                   <>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={7}>
                       <Grid container>
                         <Grid item xs={12} mt={2}>
                           <Typography>Artiste / groupe</Typography>
@@ -180,7 +186,7 @@ import {
                   </>
                 )}
   
-                <Grid item xs={6} sm={5}>
+                <Grid item xs={6} sm={4}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Status</Typography>
@@ -195,7 +201,7 @@ import {
                   </Grid>
                 </Grid>
   
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={7}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Lien de l'image</Typography>
@@ -211,21 +217,15 @@ import {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item  xs={6} sm={5}>
+                <Grid item  xs={6} sm={4}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
-                      <Typography>Genre(s)</Typography>
+                      <Typography>Type</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Select
-                        size="small"
-                        value={genreIds}
-                        onChange={(event: SelectChangeEvent<typeof genreIds>) => setGenreIds(event.target.value as number[])}
-                        fullWidth
-                        multiple
-                      >
-                        {genres.map((genre) => (
-                          <MenuItem key={genre.id} value={genre.id}>{genre.name}</MenuItem>
+                      <Select size="small" value={typeId} onChange={handleChangeType} fullWidth>
+                        {types.map((type) => (
+                            <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
                         ))}
                       </Select>
                     </Grid>
@@ -251,12 +251,18 @@ import {
                 <Grid item xs={6} sm={3}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
-                      <Typography>Type</Typography>
+                      <Typography>Genre(s)</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Select size="small" value={typeId} onChange={(event: SelectChangeEvent<typeof typeId>) => setTypeId(event.target.value as number)} fullWidth>
-                        {types.map((type) => (
-                          <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
+                      <Select
+                          size="small"
+                          value={genreIds}
+                          onChange={(event: SelectChangeEvent<typeof genreIds>) => setGenreIds(event.target.value as number[])}
+                          fullWidth
+                          multiple
+                      >
+                        {genresByType.map((genre) => (
+                            <MenuItem key={genre.id} value={genre.id}>{genre.name}</MenuItem>
                         ))}
                       </Select>
                     </Grid>

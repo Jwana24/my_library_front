@@ -108,6 +108,7 @@ const LibraryList = ({
                     variant="contained"
                     size="medium"
                     startIcon={<img src={Plus} style={{ width: "22px" }} alt="Icône d'un plus encerclé" />}
+                    sx={{ textTransform: "none" }}
                   >
                     Ajouter {librarySection === "Readings" ? "une lecture" : librarySection === "Watchings" ? "un visionnage" : librarySection === "Listenings" ? "une écoute" : null}
                   </Button>
@@ -125,7 +126,6 @@ const LibraryList = ({
                       item={libraryElement}
                       deleteItem={deleteItem}
                       updateItem={updateItem}
-                      genres={genres}
                       types={types}
                       status={status}
                       librarySection={librarySection}
@@ -148,7 +148,6 @@ const LibraryList = ({
         handleCloseModal={handleCloseCreateModal}
         titleModal="Nouvel élément"
         status={status}
-        genres={genres}
         types={types}
         buttonSubmitName="Ajouter"
         onSubmit={createItem}

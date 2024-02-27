@@ -60,7 +60,7 @@ const StaticContentOfAddingGenres = ({ isMobile, handleChangeGenre, typeId, hand
             color="secondary"
             size="small"
             startIcon={<img src={Plus} style={{ width: "17px" }} alt="Icône d'un plus encerclé" />}
-            sx={{ marginTop: "10px" }}
+            sx={{ marginTop: "10px", textTransform: "none" }}
           >
             Ajouter
           </Button>
@@ -71,15 +71,14 @@ const StaticContentOfAddingGenres = ({ isMobile, handleChangeGenre, typeId, hand
             <Box key={type.id} className="ContainerNameOfTypes">
               <Typography className="NameOfTypes">{type.name}</Typography>
               {type.genres && type.genres.map((genre) => (
-                <Typography key={genre.id}  className="NameOfGenres">{genre.name}</Typography>
+                <Typography key={genre.id} className="NameOfGenres">{genre.name}</Typography>
               ))}
             </Box>
           ))}
         </Grid>
       </Grid>
     </Box>
-
-    )
+  )
 }
 
 const SidebarMenu = ({ getIconForEachType, selectedType, setSelectedType, types, createGenre }: ISidebarMenu) => {

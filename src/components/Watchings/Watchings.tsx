@@ -128,14 +128,16 @@ const Watchings = () => {
           ...genres,
           res.data
         ]);
+
         const modifiedType = types.map((type) => {
           return type.id === typeId ?
             {
-              ...types,
+              ...type,
               genres: [ ...type.genres!, res.data ]
             }
           : type;
         });
+
         setTypes(modifiedType);
       })
       .catch(error => {
