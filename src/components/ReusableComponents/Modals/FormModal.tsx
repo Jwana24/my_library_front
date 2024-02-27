@@ -232,7 +232,7 @@ import {
                   </Grid>
                 </Grid>
   
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={7}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Titre</Typography>
@@ -248,7 +248,7 @@ import {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={6} sm={4}>
                   <Grid container>
                     <Grid item xs={12} mt={2}>
                       <Typography>Genre(s)</Typography>
